@@ -895,6 +895,16 @@ require('lazy').setup({
       require('mini.surround').setup()
 
       -- require('mini.animate').setup()
+      local MiniAnimate = require 'mini.animate'
+      MiniAnimate.setup {
+        scroll = {
+          -- Use the fix from this link to avoid glitchs when wrap is on
+          -- https://github.com/nvim-mini/mini.nvim/issues/242#issuecomment-1446046151
+          timing = function(_, n)
+            return math.min(50 / n, 4)
+          end,
+        },
+      }
 
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
@@ -994,6 +1004,27 @@ require('lazy').setup({
       vim.g.mkdp_filetypes = { 'markdown' }
     end,
     ft = { 'markdown' },
+  },
+  {
+    'sphamba/smear-cursor.nvim',
+    opts = {
+      -- How fast the smear's head moves towards the target.
+      -- 0: no movement, 1: instantaneous
+      stiffness = 0.8,
+      stifness_insert_mode = 0.7,
+      -- How fast the smear's tail moves towards the target.
+      -- 0: no movement, 1: instantaneous
+      trailig_stiffness = 0.6,
+      -- Initial velocity factor in the direction opposite to the target
+      anticipation = 0.2,
+      -- Velocity reduction over time. O: no reduction, 1: full reduction
+      damping = 0.95,
+      damping_insert_mode = 0.95,
+      -- Stop animating when the smear's tail is within this distance (in characters) from the target.
+      distance_stop_animatung = 0.5,
+
+      time_interval = 7,
+    },
   },
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
