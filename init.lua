@@ -130,8 +130,13 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 vim.o.confirm = true
--- vim.o.ignorecase = true
--- vim.o.smartcase = true
+-- vim.o.tabstop = 8
+-- vim.o.shiftwidth = 4
+-- vim.o.softtabstop = 4
+-- vim.o.expandtab = false
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 
 -- [[ Basic Keymaps ]]
 
@@ -166,6 +171,13 @@ vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
 vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('v', 'P', 'p')
+vim.keymap.set('n', 'vv', 'V')
+vim.keymap.set('n', 'd', '"_d')
+vim.keymap.set('n', 'D', '"_D')
+vim.keymap.set('n', 'c', '"_c')
+vim.keymap.set('n', 'dd', 'dd')
+vim.keymap.set({ 'n', 'x' }, 'Y', 'yy')
+vim.keymap.set({ 'n', 'x' }, 'D', 'dd')
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -744,6 +756,9 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        jsonc = { 'jsonls', stop_after_first = true },
+        -- jsonc = { 'prettierd', 'prettier', stop_after_first = true },
+        -- jsonc = { 'prettier', stop_after_first = true },
         markdown = { 'markdownlint' },
         ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
       },
