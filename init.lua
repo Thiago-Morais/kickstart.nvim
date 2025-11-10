@@ -758,7 +758,6 @@ require('lazy').setup({
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         jsonc = { 'jsonls', stop_after_first = true },
         -- jsonc = { 'prettierd', 'prettier', stop_after_first = true },
-        -- jsonc = { 'prettier', stop_after_first = true },
         markdown = { 'markdownlint' },
         ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
       },
