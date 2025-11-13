@@ -1,25 +1,4 @@
 --[[
-
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
 What is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
@@ -175,6 +154,7 @@ vim.keymap.set('n', 'vv', 'V')
 vim.keymap.set('n', 'd', '"_d')
 vim.keymap.set('n', 'D', '"_D')
 vim.keymap.set('n', 'c', '"_c')
+vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set('n', 'dd', 'dd')
 vim.keymap.set({ 'n', 'x' }, 'Y', 'yy')
 vim.keymap.set({ 'n', 'x' }, 'D', 'dd')
@@ -408,9 +388,15 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>sF', function()
+        builtin.find_files { no_ignore = true }
+      end, { desc = '[S]earch hidden [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>sG', function()
+        builtin.live_grep { no_ignore = true }
+      end, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -865,28 +851,28 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
-  },
-
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('tokyonight').setup {
+  --       styles = {
+  --         comments = { italic = false }, -- Disable italics in comments
+  --       },
+  --     }
+  --
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --   end,
+  -- },
+  --
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -1089,3 +1075,49 @@ vim.api.nvim_create_autocmd('VimEnter', {
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- An example subset of your init.lua
+
+local function source_matugen()
+  -- Update this with the location of your output file
+  local matugen_path = os.getenv 'HOME' .. '/.config/nvim/matugen.lua' -- dofile doesn't expand $HOME or ~
+
+  local file, err = io.open(matugen_path, 'r')
+  -- If the matugen file does not exist (yet or at all), we must initialize a color scheme ourselves
+  if err ~= nil then
+    -- Some placeholder theme, this will be overwritten once matugen kicks in
+    -- vim.cmd 'colorscheme base16-catppuccin-mocha'
+    vim.cmd.colorscheme 'tokyonight-night'
+
+    -- Optionally print something to the user
+    vim.print "A matugen style file was not found, but that's okay! The colorscheme will dynamically change if matugen runs!"
+  else
+    dofile(matugen_path)
+    io.close(file)
+  end
+end
+
+-- Main entrypoint on matugen reloads
+local function auxiliary_function()
+  -- Load the matugen style file to get all the new colors
+  local matugen_path = os.getenv 'HOME' .. '/.config/nvim/matugen.lua'
+  source_matugen()
+
+  -- -- Because reloading base16 overwrites lualine configuration, just source lualine here
+  -- dofile(os.getenv 'HOME' .. '/.config/nvim/config/plugins/lualine-nvim.lua') -- path of your lualine setup
+
+  -- Any other options you wish to set upon matugen reloads can also go here!
+  local comment_hl = vim.api.nvim_get_hl(0, { name = 'Comment' })
+  comment_hl.italic = true
+  vim.api.nvim_set_hl(0, 'Comment', comment_hl)
+end
+
+-- Register an autocmd to listen for matugen updates
+vim.api.nvim_create_autocmd('Signal', {
+  pattern = 'SIGUSR1',
+  callback = auxiliary_function,
+})
+
+-- Additionally call this function once on startup to query for matugen's theme
+-- or set a default
+auxiliary_function()
