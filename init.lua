@@ -699,6 +699,10 @@ require('lazy').setup({
           end,
         },
       }
+
+      for server_name, server_settings in pairs(servers) do
+        vim.lsp.config(server_name, server_settings)
+      end
     end,
   },
 
@@ -1100,7 +1104,6 @@ end
 -- Main entrypoint on matugen reloads
 local function auxiliary_function()
   -- Load the matugen style file to get all the new colors
-  local matugen_path = os.getenv 'HOME' .. '/.config/nvim/matugen.lua'
   source_matugen()
 
   -- -- Because reloading base16 overwrites lualine configuration, just source lualine here
