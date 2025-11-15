@@ -148,6 +148,7 @@ vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
 vim.keymap.set('n', '<M-k>', '<C-w>K', { desc = 'Move window to the upper' })
 vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
+-- Remap existing commands
 vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('v', 'P', 'p')
 vim.keymap.set('n', 'vv', 'V')
@@ -158,6 +159,9 @@ vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set('n', 'dd', 'dd')
 vim.keymap.set({ 'n', 'x' }, 'Y', 'yy')
 vim.keymap.set({ 'n', 'x' }, 'D', 'dd')
+vim.keymap.set('n', 'o', 'o<Esc>')
+vim.keymap.set('n', 'O', 'O<Esc>')
+
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
