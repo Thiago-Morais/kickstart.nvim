@@ -162,6 +162,9 @@ vim.keymap.set({ 'n', 'x' }, 'D', 'dd')
 vim.keymap.set('n', 'o', 'o<Esc>')
 vim.keymap.set('n', 'O', 'O<Esc>')
 
+-- Map plugin commands
+vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>', { desc = 'Open DiffView for the current file' })
+vim.keymap.set('n', '<leader>D', ':DiffviewClose<CR>', { desc = 'Close DiffView' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -1034,6 +1037,9 @@ require('lazy').setup({
       time_interval = 7,
     },
   },
+  { 'tpope/vim-fugitive' },
+  { 'sindrets/diffview.nvim' },
+
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
