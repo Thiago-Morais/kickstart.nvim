@@ -80,9 +80,23 @@ vim.o.confirm = true
 -- vim.o.shiftwidth = 4
 -- vim.o.softtabstop = 4
 -- vim.o.expandtab = false
-vim.o.tabstop = 4
+
+-- vim.o.tabstop = 4
+-- vim.o.shiftwidth = 4
+-- vim.o.expandtab = true
+
+vim.o.tabstop = 8
 vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
 vim.o.expandtab = true
+vim.o.smartindent = false
+
+vim.o.exrc = true
+vim.o.secure = true
+
+vim.filetype.add {
+  extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi' },
+}
 
 -- [[ Basic Keymaps ]]
 
@@ -640,9 +654,21 @@ require('lazy').setup({
       },
     },
     opts = {
+      log_level = vim.log.levels.DEBUG,
       notify_on_error = false,
       formatters = {
-        prettierd = {},
+        prettierd = {
+          prepend_args = {
+            '--tab-width=4',
+            '--use-tabs=false',
+          },
+        },
+        prettier = {
+          prepend_args = {
+            '--tab-width=4',
+            '--use-tabs=false',
+          },
+        },
       },
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
