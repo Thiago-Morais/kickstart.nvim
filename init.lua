@@ -129,6 +129,9 @@ vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
 vim.keymap.set('n', '<M-k>', '<C-w>K', { desc = 'Move window to the upper' })
 vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 
+vim.keymap.set('n', '<C-S-.>', '<C-w>>')
+vim.keymap.set('n', '<C-S-,>', '<C-w><')
+
 -- Remap existing commands
 vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('v', 'P', 'p')
