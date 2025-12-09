@@ -143,6 +143,19 @@ vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>', { desc = 'Open DiffView fo
 vim.keymap.set('n', '<leader>D', ':DiffviewClose<CR>', { desc = 'Close DiffView' })
 vim.keymap.set('n', '<leader>v', ':LivePreview close<CR>:LivePreview start<CR>', { desc = 'Restart LivePreview' })
 
+-- [[ Complex Keymaps ]]
+
+vim.keymap.set('n', '<leader>nw', function()
+  local shell = vim.env.SHELL
+  vim.fn.jobstart({
+    'alacritty',
+    '-e',
+    shell,
+    '-c',
+    'nvim;' .. shell,
+  }, { detach = true })
+end, { desc = '[N]ew [W]indow with CWD' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
