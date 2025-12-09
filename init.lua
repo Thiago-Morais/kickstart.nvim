@@ -141,6 +141,7 @@ vim.keymap.set('n', 'dd', 'dd')
 -- Map plugin commands
 vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>', { desc = 'Open DiffView for the current file' })
 vim.keymap.set('n', '<leader>D', ':DiffviewClose<CR>', { desc = 'Close DiffView' })
+vim.keymap.set('n', '<leader>v', ':LivePreview close<CR>:LivePreview start<CR>', { desc = 'Restart LivePreview' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
