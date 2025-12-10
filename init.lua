@@ -141,6 +141,9 @@ vim.keymap.set('n', 'dd', 'dd')
 vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>', { desc = 'Open DiffView for the current file' })
 vim.keymap.set('n', '<leader>D', ':DiffviewClose<CR>', { desc = 'Close DiffView' })
 vim.keymap.set('n', '<leader>v', ':LivePreview close<CR>:LivePreview start<CR>', { desc = 'Restart LivePreview' })
+vim.keymap.set('n', '<leader>ls', '<cmd>LiveServerStart<cr>', { desc = 'Start Live Server' })
+vim.keymap.set('n', '<leader>lx', '<cmd>LiveServerStop<cr>', { desc = 'Stop Live Server' })
+vim.keymap.set('n', '<leader>lt', '<cmd>LiveServerToggle<cr>', { desc = 'Toggle Live Server' })
 
 -- [[ Complex Keymaps ]]
 
