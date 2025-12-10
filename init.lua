@@ -76,7 +76,7 @@ vim.o.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 vim.o.confirm = true
-
+-- Indentation
 vim.o.tabstop = 8
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
@@ -85,13 +85,13 @@ vim.o.smartindent = true
 
 vim.o.exrc = true
 vim.o.secure = true
-
+-- Remap filetypes
 vim.filetype.add {
   extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi' },
 }
 
 -- [[ Basic Keymaps ]]
-
+--
 -- Clear highlights on search when pressing <Esc> in normal mode
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
@@ -110,7 +110,6 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 vim.keymap.set('n', '<M-h>', '<C-w>H', { desc = 'Move window to the left' })
 vim.keymap.set('n', '<C-S-h>', '<C-w>H', { desc = 'Move window to the left' })
