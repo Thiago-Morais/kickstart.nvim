@@ -87,7 +87,7 @@ vim.o.exrc = true
 vim.o.secure = true
 -- Remap filetypes
 vim.filetype.add {
-  extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi' },
+  extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', sh = 'bash' },
 }
 
 -- [[ Basic Keymaps ]]
@@ -691,6 +691,8 @@ require('lazy').setup({
         jsonc = { 'jsonls', stop_after_first = true },
         -- jsonc = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'markdownlint' },
+        bash = { 'beautysh' },
+        sh = { 'beautysh' },
         ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
       },
     },
