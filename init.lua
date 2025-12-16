@@ -1081,6 +1081,18 @@ vim.api.nvim_create_autocmd('VimEnter', {
 
 -- An example subset of your init.lua
 
+-- Format document with a custom formatter
+vim.api.nvim_create_user_command('FormatWith', function(opts)
+  local list = vim.split(opts.args, ',', { trimempty = true })
+  require('conform').format { formatters = list }
+end, {
+  nargs = 1,
+  desc = 'Format with a comma-separated list of formatters',
+  complete = function()
+    return require('mason-registry').get_installed_package_names()
+  end,
+})
+
 local function source_matugen()
   -- Update this with the location of your output file
   local matugen_path = os.getenv 'HOME' .. '/.config/nvim/matugen.lua' -- dofile doesn't expand $HOME or ~
