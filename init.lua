@@ -123,6 +123,8 @@ vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
 vim.keymap.set('n', '<C-S-.>', '<C-w>>')
 vim.keymap.set('n', '<C-S-,>', '<C-w><')
 
+vim.keymap.set('n', '<leader>wt', ':split | terminal<CR>')
+
 -- Remap existing commands
 vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('v', 'P', 'p')
@@ -138,8 +140,8 @@ vim.keymap.set('n', 'dd', 'dd')
 -- vim.keymap.set('n', 'O', 'O<Esc>')
 
 -- Map plugin commands
-vim.keymap.set('n', '<leader>d', ':DiffviewOpen<CR>', { desc = 'Open DiffView for the current file' })
-vim.keymap.set('n', '<leader>D', ':DiffviewClose<CR>', { desc = 'Close DiffView' })
+vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', { desc = 'Open [G]it [D]iffView for the current file' })
+vim.keymap.set('n', '<leader>gD', ':DiffviewClose<CR>', { desc = 'Close [G]it [D]iffView' })
 vim.keymap.set('n', '<leader>v', ':LivePreview close<CR>:LivePreview start<CR>', { desc = 'Restart LivePreview' })
 vim.keymap.set('n', '<leader>ls', '<cmd>LiveServerStart<cr>', { desc = 'Start Live Server' })
 vim.keymap.set('n', '<leader>lx', '<cmd>LiveServerStop<cr>', { desc = 'Stop Live Server' })
