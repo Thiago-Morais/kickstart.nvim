@@ -30,9 +30,11 @@ return {
   event = 'VimEnter',
   keys = {
     { '<leader>tn', '<cmd>Neotest run<CR>', desc = 'Run the [N]earest test' },
+    { '<leader>tr', '<cmd>Neotest run<CR>', desc = '[R]un the nearest test' },
+    { '<leader>tN', '<cmd>Neotest stop<CR>', desc = 'Stop the [N]earest test' },
+    { '<leader>tR', '<cmd>Neotest stop<CR>', desc = 'Stop the nearest test (inverse of [R]un)' },
     { '<leader>tf', '<cmd>Neotest run file<CR>', desc = 'Run the current [F]ile' },
     { '<leader>tl', '<cmd>Neotest run last<CR>', desc = 'Run [L]ast file' },
-    { '<leader>tN', '<cmd>Neotest stop<CR>', desc = 'Stop the [N]earest test' },
     { '<leader>ta', '<cmd>Neotest attach<CR>', desc = '[A]ttach to the nearest test' },
     { '<leader>ts', '<cmd>Neotest summary<CR>', desc = 'Open [S]ummary panel' },
     { '<leader>to', '<cmd>Neotest output-panel<CR>', desc = 'Open [O]utpup panel' },
