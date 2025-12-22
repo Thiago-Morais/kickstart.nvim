@@ -8,6 +8,7 @@ return {
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
   },
+  event = 'UIEnter',
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
     {
