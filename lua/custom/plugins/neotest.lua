@@ -27,6 +27,7 @@ return {
     }
   end,
 
+  event = 'VimEnter',
   keys = {
     { '<leader>tn', '<cmd>Neotest run<CR>', desc = 'Run the [N]earest test' },
     { '<leader>tf', '<cmd>Neotest run file<CR>', desc = 'Run the current [F]ile' },
