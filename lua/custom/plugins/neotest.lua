@@ -38,6 +38,13 @@ return {
     { '<leader>ta', '<cmd>Neotest attach<CR>', desc = '[A]ttach to the nearest test' },
     { '<leader>ts', '<cmd>Neotest summary<CR>', desc = 'Open [S]ummary panel' },
     { '<leader>to', '<cmd>Neotest output-panel<CR>', desc = 'Open [O]utpup panel' },
-    { '<leader>td', '<cmd>lua require("neotest").run.run ({ strategy = "dap" })<CR>', desc = '[D]ebug the nearest test' },
+    { '<leader>tO', '<cmd>Neotest output<CR>', desc = 'Open [O]utpup window' },
+    {
+      '<leader>td',
+      function()
+        require('neotest').run.run { strategy = 'dap' }
+      end,
+      desc = '[D]ebug the nearest test',
+    },
   },
 }
