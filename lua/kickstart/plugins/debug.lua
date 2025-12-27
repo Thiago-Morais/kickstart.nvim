@@ -11,41 +11,12 @@ return {
   event = 'UIEnter',
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
-    {
-      '<leader>ds',
-      function()
-        require('dap').continue()
-      end,
-      desc = '[D]ebug: [S]tart/Continue',
-    },
-    {
-      '<leader>di',
-      function()
-        require('dap').step_into()
-      end,
-      desc = '[D]ebug: Step [I]nto',
-    },
-    {
-      '<leader>do',
-      function()
-        require('dap').step_over()
-      end,
-      desc = '[D]ebug: Step [O]ver',
-    },
-    {
-      '<leader>dI',
-      function()
-        require('dap').step_out()
-      end,
-      desc = '[D]ebug: Step Out (oposite of [I]nto)',
-    },
-    {
-      '<leader>db',
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      desc = '[D]ebug: Toggle [B]reakpoint',
-    },
+    { '<leader>ds', '<cmd>DapContinue<CR>', desc = '[D]ebug: [S]tart/Continue' },
+    { '<leader>dc', '<cmd>DapContinue<CR>', desc = '[D]ebug: Start/[C]ontinue' },
+    { '<leader>di', '<cmd>DapStepInto<CR>', desc = '[D]ebug: Step [I]nto' },
+    { '<leader>do', '<cmd>DapStepOver<CR>', desc = '[D]ebug: Step [O]ver' },
+    { '<leader>dI', '<cmd>DapStepOut<CR>', desc = '[D]ebug: Step Out (oposite of [I]nto)' },
+    { '<leader>db', '<cmd>DapToggleBreakpoint<CR>', desc = '[D]ebug: Toggle [B]reakpoint' },
     {
       '<leader>dB',
       function()
@@ -61,6 +32,7 @@ return {
       end,
       desc = '[D]ebug: See [L]ast session result.',
     },
+    { '<leader>dt', '<cmd>DapTerminate<CR>', desc = '[D]ebug: [T]erminate' },
   },
   config = function()
     local dap = require 'dap'
