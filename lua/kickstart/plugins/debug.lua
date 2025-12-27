@@ -28,7 +28,7 @@ return {
     {
       '<leader>dl',
       function()
-        require('dapui').toggle()
+        require('dapui').toggle { reset = true }
       end,
       desc = '[D]ebug: See [L]ast session result.',
     },
