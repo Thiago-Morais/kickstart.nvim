@@ -77,7 +77,7 @@ vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
 -- Indentation
-vim.o.tabstop = 8
+vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = false
@@ -700,7 +700,27 @@ require('lazy').setup({
         sh = { 'beautysh' },
         ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
       },
+      formatters = {
+        prettier = {
+          append_args = function(_, ctx)
+            local bufnr = ctx.buf or ctx.bufnr or vim.api.nvim_get_current_buf()
+            local shiftwidth = vim.bo[bufnr].shiftwidth
+            local expandtab = vim.bo[bufnr].expandtab
+
+            local args = { '--tab-width=' .. tostring(shiftwidth) }
+            if not expandtab then
+              table.insert(args, '--use-tabs')
+            end
+
+            return args
+          end,
+        },
+      },
     },
+    config = function(_, opts)
+      opts.formatters.prettierd = opts.formatters.prettier
+      require('conform').setup(opts)
+    end,
   },
   {
     'zapling/mason-conform.nvim',
