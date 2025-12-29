@@ -293,6 +293,7 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
         { '<leader>d', group = '[D]ebugging' },
         { '<leader>l', group = '[L]ive Server' },
+        { '<leader>m', group = '[M]ulticursor' },
       },
     },
   },
