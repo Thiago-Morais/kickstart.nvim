@@ -159,6 +159,21 @@ vim.keymap.set('n', '<leader>nw', function()
     'nvim;' .. shell,
   }, { detach = true })
 end, { desc = '[N]ew [W]indow with CWD' })
+vim.keymap.set('n', '<leader>cfr', function()
+  local path = vim.fn.expand '%'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied path:' .. path)
+end, { desc = "[C]opy [F]ile's [R]elative path" })
+vim.keymap.set({ 'n', 'x' }, '<leader>cfa', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied path:' .. path)
+end, { desc = "[C]opy [F]ile's [A]bsolute path" })
+vim.keymap.set({ 'n', 'x' }, '<leader>cff', function()
+  local path = vim.fn.expand '%:f'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied path:' .. path)
+end, { desc = "[C]opy [F]ile's [F]ilename" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -294,6 +309,8 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ebugging' },
         { '<leader>l', group = '[L]ive Server' },
         { '<leader>m', group = '[M]ulticursor' },
+        { '<leader>c', group = '[C]opy' },
+        { '<leader>cf', group = '[C]opy [F]ile' },
       },
     },
   },
