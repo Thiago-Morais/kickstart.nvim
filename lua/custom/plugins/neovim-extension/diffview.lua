@@ -20,4 +20,8 @@ return {
       end,
     },
   },
+  keys = {
+    { '<leader>gd', '<cmd>DiffviewOpen<CR>', desc = 'Open [G]it [D]iffView for the current file' },
+    { '<leader>gD', '<cmd>DiffviewClose<CR>', desc = 'Close [G]it [D]iffView' },
+  },
 }

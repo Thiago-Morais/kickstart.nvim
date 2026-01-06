@@ -103,25 +103,21 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
+--  Move focus
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
-vim.keymap.set('n', '<M-h>', '<C-w>H', { desc = 'Move window to the left' })
+-- Move window
 vim.keymap.set('n', '<C-S-h>', '<C-w>H', { desc = 'Move window to the left' })
-vim.keymap.set('n', '<M-l>', '<C-w>L', { desc = 'Move window to the right' })
 vim.keymap.set('n', '<C-S-l>', '<C-w>L', { desc = 'Move window to the right' })
-vim.keymap.set('n', '<M-j>', '<C-w>J', { desc = 'Move window to the lower' })
 vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
-vim.keymap.set('n', '<M-k>', '<C-w>K', { desc = 'Move window to the upper' })
 vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
-
+-- Resize window
 vim.keymap.set('n', '<C-S-.>', '<C-w>>')
 vim.keymap.set('n', '<C-S-,>', '<C-w><')
+vim.keymap.set('n', '<C-S-=>', '<C-w>+')
+vim.keymap.set('n', '<C-S-->', '<C-w>-')
 
 vim.keymap.set('n', '<leader>wt', ':split | terminal<CR>')
 
@@ -134,18 +130,6 @@ vim.keymap.set('n', 'D', '"_D')
 vim.keymap.set('n', 'c', '"_c')
 vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set('n', 'dd', 'dd')
--- vim.keymap.set({ 'n', 'x' }, 'Y', 'yy')
--- vim.keymap.set({ 'n', 'x' }, 'D', 'dd')
--- vim.keymap.set('n', 'o', 'o<Esc>')
--- vim.keymap.set('n', 'O', 'O<Esc>')
-
--- Map plugin commands
-vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', { desc = 'Open [G]it [D]iffView for the current file' })
-vim.keymap.set('n', '<leader>gD', ':DiffviewClose<CR>', { desc = 'Close [G]it [D]iffView' })
-vim.keymap.set('n', '<leader>v', ':LivePreview close<CR>:LivePreview start<CR>', { desc = 'Restart LivePreview' })
-vim.keymap.set('n', '<leader>ls', '<cmd>LiveServerStart<cr>', { desc = 'Start Live Server' })
-vim.keymap.set('n', '<leader>lx', '<cmd>LiveServerStop<cr>', { desc = 'Stop Live Server' })
-vim.keymap.set('n', '<leader>lt', '<cmd>LiveServerToggle<cr>', { desc = 'Toggle Live Server' })
 
 -- [[ Complex Keymaps ]]
 

@@ -7,4 +7,7 @@ return {
     'echasnovski/mini.pick',
     'folke/snacks.nvim',
   },
+  keys = {
+    { '<leader>v', '<cmd>LivePreview close<CR><cmd>LivePreview start<CR>', desc = 'Restart LivePreview' },
+  },
 }
