@@ -119,7 +119,9 @@ vim.keymap.set('n', '<C-S-,>', '<C-w><')
 vim.keymap.set('n', '<C-S-=>', '<C-w>+')
 vim.keymap.set('n', '<C-S-->', '<C-w>-')
 
-vim.keymap.set('n', '<leader>wt', ':split | terminal<CR>')
+vim.keymap.set('n', '<leader>nt', '<cmd>tabnew %', { desc = 'Open a [N]ew [T]ab page with the current file' })
+
+vim.keymap.set('n', '<leader>wt', '<cmd>split | terminal<CR>', { desc = 'Open a new [W]indow with a [T]erminal' })
 
 -- Remap existing commands
 vim.keymap.set('v', 'p', 'P')
@@ -142,7 +144,7 @@ vim.keymap.set('n', '<leader>nw', function()
     '-c',
     'nvim;' .. shell,
   }, { detach = true })
-end, { desc = '[N]ew [W]indow with CWD' })
+end, { desc = '[N]ew application [W]indow with CWD' })
 vim.keymap.set('n', '<leader>cfr', function()
   local path = vim.fn.expand '%'
   vim.fn.setreg('+', path)
