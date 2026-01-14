@@ -11,30 +11,40 @@ return {
     -- Add or skip cursor above/below the main cursor.
     set({ 'n', 'x' }, { '<up>', '<leader>mk', '<C-M-k>' }, function()
       mc.lineAddCursor(-1)
-    end, { desc = 'Add cursor above the main cursor (<C-M-k>)' })
+    end, { desc = 'Add cursor above [k] the main cursor (<C-M-k>)' })
     set({ 'n', 'x' }, { '<down>', '<leader>mj', '<C-M-j>' }, function()
       mc.lineAddCursor(1)
-    end, { desc = 'Add cursor below the main cursor (<C-M-j>)' })
+    end, { desc = 'Add cursor below [j] the main cursor (<C-M-j>)' })
     set({ 'n', 'x' }, { '<leader><up>', '<leader>mK' }, function()
       mc.lineSkipCursor(-1)
-    end, { desc = 'Skip cursor above the main cursor' })
+    end, { desc = 'Skip cursor above [k] the main cursor' })
     set({ 'n', 'x' }, { '<leader><down>', '<leader>mJ' }, function()
       mc.lineSkipCursor(1)
-    end, { desc = 'Skip cursor below the main cursor' })
+    end, { desc = 'Skip cursor below [j] the main cursor' })
 
     -- Add or skip adding a new cursor by matching word/selection
-    set({ 'n', 'x' }, { '<leader>mn', '<C-M-l>' }, function()
+    -- The first command select the word, the second select the next match
+    local function selectThenKeymap(lhs, rhs, opts)
+      set({ 'n' }, lhs, 'viw', opts)
+      set({ 'x' }, lhs, rhs, opts)
+    end
+
+    selectThenKeymap({ '<leader>mn', '<C-M-l>' }, function()
       mc.matchAddCursor(1)
-    end, { desc = 'Add a new cursor by matching next word/selection (<C-M-l>)' })
-    set({ 'n', 'x' }, { '<leader>mN', '<C-M-h>' }, function()
+    end, { desc = 'Add a [N]ew cursor by matching next word/selection (<C-M-l>)' })
+    selectThenKeymap({ '<leader>mN', '<C-M-h>' }, function()
       mc.matchAddCursor(-1)
-    end, { desc = 'Add a new cursor by matching previous word/selection (<C-M-h>)' })
-    set({ 'n', 'x' }, { '<leader>ms' }, function()
+    end, { desc = 'Add a [N]ew cursor by matching previous word/selection (<C-M-h>)' })
+    selectThenKeymap({ '<leader>ms' }, function()
       mc.matchSkipCursor(1)
-    end, { desc = 'Skip adding a new cursor by matching next word/selection' })
-    set({ 'n', 'x' }, { '<leader>mS' }, function()
+    end, { desc = '[S]kip adding a new cursor by matching next word/selection' })
+    selectThenKeymap({ '<leader>mS' }, function()
       mc.matchSkipCursor(-1)
-    end, { desc = 'Skip adding a new cursor by matching previous word/selection' })
+    end, { desc = '[S]kip adding a new cursor by matching previous word/selection' })
+    selectThenKeymap('<leader>mA', mc.matchAllAddCursors, { desc = 'Add a cursor for [A]ll matches of the word/selection under the cursor.' })
+
+    set({ 'x', 'n' }, '<leader>m<c-a>', mc.sequenceIncrement, { desc = 'Add to the number or alphabetic character in the highlighted text.' })
+    set({ 'x', 'n' }, '<leader>m<c-x>', mc.sequenceDecrement, { desc = 'Subtract from the number or alphabetic character in the highlighted text.' })
 
     -- Add and remove cursors with control + left click.
     set('n', '<c-leftmouse>', mc.handleMouse, { desc = 'Add and remove cursors with control + left click' })
