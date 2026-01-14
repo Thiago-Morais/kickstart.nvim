@@ -119,7 +119,7 @@ vim.keymap.set('n', '<C-S-,>', '<C-w><')
 vim.keymap.set('n', '<C-S-=>', '<C-w>+')
 vim.keymap.set('n', '<C-S-->', '<C-w>-')
 
-vim.keymap.set('n', '<leader>nt', '<cmd>tabnew %', { desc = 'Open a [N]ew [T]ab page with the current file' })
+vim.keymap.set('n', '<leader>nt', '<cmd>tabnew %<CR>', { desc = 'Open a [N]ew [T]ab page with the current file' })
 
 vim.keymap.set('n', '<leader>wt', '<cmd>split | terminal<CR>', { desc = 'Open a new [W]indow with a [T]erminal' })
 
