@@ -7,5 +7,6 @@ return {
   { import = 'custom.plugins.typing' },
   { import = 'custom.plugins.lsp' },
   { import = 'custom.plugins.mini' },
+  { import = 'custom.plugins.running' },
   { import = 'custom.plugins.neovim-extension' },
 }
