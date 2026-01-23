@@ -1,5 +1,6 @@
 return {
   'sindrets/diffview.nvim',
+  event = 'VeryLazy',
   opts = {
     hooks = {
       -- Taken from this example: https://github.com/sindrets/diffview.nvim/pull/258#issuecomment-1408689220
@@ -23,5 +24,7 @@ return {
   keys = {
     { '<leader>gd', '<cmd>DiffviewOpen<CR>', desc = 'Open [G]it [D]iffView for the current file' },
     { '<leader>gD', '<cmd>DiffviewClose<CR>', desc = 'Close [G]it [D]iffView' },
+    { '<leader>gf', '<cmd>DiffviewFileHistory %<CR>', desc = 'Open [G]it [F]ile history for the current file' },
+    { '<leader>gF', '<cmd>DiffviewClose<CR>', desc = 'Close [G]it [F]ile history for the current file' },
   },
 }
