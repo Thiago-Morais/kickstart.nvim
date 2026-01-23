@@ -10,6 +10,7 @@ return {
     'nvim-neotest/neotest-plenary',
     'nvim-neotest/neotest-vim-test',
     'nvim-neotest/neotest-jest',
+    'marilari88/neotest-vitest',
   },
 
   config = function()
@@ -23,6 +24,7 @@ return {
           ignore_file_types = { 'python', 'vim', 'lua' },
         },
         require 'neotest-jest',
+        require 'neotest-vitest',
       },
     }
   end,
