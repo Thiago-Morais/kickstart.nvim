@@ -15,6 +15,9 @@ return {
     version = '1.*',
     dependencies = {
       'MahanRahmati/blink-nerdfont.nvim',
+      'Kaiser-Yang/blink-cmp-git',
+      'disrupted/blink-cmp-conventional-commits',
+      'moyiz/blink-emoji.nvim',
       -- Snippet Engine
       {
         'L3MON4D3/LuaSnip',
@@ -63,7 +66,7 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont', 'git', 'conventional_commits', 'emoji' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           nerdfont = {
@@ -74,6 +77,43 @@ return {
               insert = true, -- Insert nerdfont icon (default) or complete its name
               trigger = ':-)', -- Customize the trigger. Defaults to ":"
             },
+          },
+          git = {
+            module = 'blink-cmp-git',
+            name = 'Git',
+            opts = {
+              -- options for the blink-cmp-git
+            },
+          },
+          conventional_commits = {
+            name = 'Conventional Commits',
+            module = 'blink-cmp-conventional-commits',
+            enabled = function()
+              return vim.bo.filetype == 'gitcommit'
+            end,
+            ---@module 'blink-cmp-conventional-commits'
+            ---@type blink-cmp-conventional-commits.Options
+            opts = {}, -- none so far
+          },
+          emoji = {
+            module = 'blink-emoji',
+            name = 'Emoji',
+            score_offset = 15, -- Tune by preference
+            opts = {
+              insert = true, -- Insert emoji (default) or complete its name
+              ---@type string|table|fun():table
+              trigger = function()
+                return { ':' }
+              end,
+            },
+            should_show_items = function()
+              return vim.tbl_contains(
+                -- Enable emoji completion only for git commits and markdown.
+                -- By default, enabled for all file-types.
+                { 'gitcommit', 'markdown' },
+                vim.o.filetype
+              )
+            end,
           },
         },
       },
