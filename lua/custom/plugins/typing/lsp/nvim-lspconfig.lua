@@ -62,7 +62,11 @@ return {
 
         -- Fuzzy find all the symbols in your current document.
         --  Symbols are things like variables, functions, types, etc.
-        map('gO', require('telescope.builtin').lsp_document_symbols, 'Open Document Symbols')
+        map('gO', function()
+          require('telescope.builtin').lsp_document_symbols {
+            default_text = '',
+          }
+        end, 'Open Document Symbols')
 
         -- Fuzzy find all the symbols in your current workspace.
         --  Similar to document symbols, except searches over your entire project.
@@ -82,6 +86,7 @@ return {
           if vim.fn.has 'nvim-0.11' == 1 then
             return client:supports_method(method, bufnr)
           else
+            ---@diagnostic disable-next-line: param-type-mismatch
             return client.supports_method(method, { bufnr = bufnr })
           end
         end
@@ -125,6 +130,8 @@ return {
         end
       end,
     })
+
+    vim.lsp.inlay_hint.enable(true)
 
     -- Diagnostic Config
     -- See :help vim.diagnostic.Opts
@@ -175,15 +182,27 @@ return {
       -- gopls = {},
       -- pyright = {},
       -- rust_analyzer = {},
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+      -- ... etc. See `:help lspconfig-all` for a list of all the preconfigured LSPs
       --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
+      -- Some languages (like TypeScript) have entire language plugins that can be useful:
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`ts_ls`) will work just fine
-      ts_ls = {},
+      -- ts_ls = {},
       --
       jsonls = {},
+      -- harper_ls = {
+      --   settings = {
+      --     ['harper-ls'] = {
+      --       linters = {
+      --         SentenceCapitalization = false,
+      --         SpellCheck = false,
+      --         OrthographicConsistency = false,
+      --         Dashes = false,
+      --       },
+      --     },
+      --   },
+      -- },
 
       lua_ls = {
         -- cmd = { ... },
