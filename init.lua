@@ -88,6 +88,11 @@ vim.o.secure = true
 -- Remap filetypes
 vim.filetype.add {
   extension = { rasi = 'rasi', rofi = 'rasi', wofi = 'rasi', sh = 'bash' },
+  pattern = {
+    ['.*/mako/config'] = 'dosini',
+    ['.*/hypr/.+%.conf'] = 'hyprlang',
+    ['%.env%.[%w_.-]+'] = 'sh',
+  },
 }
 
 -- [[ Basic Keymaps ]]
