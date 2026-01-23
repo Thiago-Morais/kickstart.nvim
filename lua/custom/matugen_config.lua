@@ -1,4 +1,4 @@
-local matugen = {}
+local M = {}
 
 local function source_matugen()
   -- Update this with the location of your output file
@@ -34,7 +34,7 @@ local function reload()
   vim.api.nvim_set_hl(0, 'Comment', comment_hl)
 end
 
-function matugen.setup()
+function M.setup()
   -- Register an autocmd to listen for matugen updates
   vim.api.nvim_create_autocmd('Signal', {
     pattern = 'SIGUSR1',
@@ -46,4 +46,4 @@ end
 
 -- Additionally call this function once on startup to query for matugen's theme
 -- or set a default
-return matugen
+return M
