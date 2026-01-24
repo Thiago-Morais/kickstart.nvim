@@ -18,6 +18,10 @@ return {
       'Kaiser-Yang/blink-cmp-git',
       'disrupted/blink-cmp-conventional-commits',
       'moyiz/blink-emoji.nvim',
+      {
+        'mikavilpas/blink-ripgrep.nvim',
+        version = '*', -- use the latest stable version
+      },
       -- Snippet Engine
       {
         'L3MON4D3/LuaSnip',
@@ -46,6 +50,7 @@ return {
       },
       'folke/lazydev.nvim',
     },
+
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
     opts = {
@@ -66,7 +71,7 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont', 'git', 'conventional_commits', 'emoji' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont', 'git', 'conventional_commits', 'emoji', 'ripgrep' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           nerdfont = {
@@ -114,6 +119,14 @@ return {
                 vim.o.filetype
               )
             end,
+          },
+          ripgrep = {
+            module = 'blink-ripgrep',
+            name = 'Ripgrep',
+            -- see the full configuration below for all available options
+            ---@module "blink-ripgrep"
+            ---@type blink-ripgrep.Options
+            opts = {},
           },
         },
       },
