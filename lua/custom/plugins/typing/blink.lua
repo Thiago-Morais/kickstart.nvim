@@ -48,6 +48,41 @@ return {
           },
         },
         opts = {},
+        keys = {
+          {
+            '<Tab>',
+            function()
+              local ls = require 'luasnip'
+              if ls.locally_jumpable(1) then
+                ls.jump(1)
+              else
+                require('custom.keymap_extended').feedkey '<Tab>'
+              end
+            end,
+            mode = { 'n', 'i', 's' },
+          },
+          {
+            '<S-Tab>',
+            function()
+              local ls = require 'luasnip'
+              if ls.locally_jumpable(-1) then
+                ls.jump(-1)
+              else
+                require('custom.keymap_extended').feedkey '<S-Tab>'
+              end
+            end,
+            mode = { 'n', 'i', 's' },
+          },
+          {
+            '<C-E>',
+            function()
+              if require('luasnip').choice_active() then
+                require('luasnip').change_choice(1)
+              end
+            end,
+            mode = { 'n', 'i', 's' },
+          },
+        },
       },
       'folke/lazydev.nvim',
     },
