@@ -8,6 +8,7 @@ vim.g.have_nerd_font = true
 
 require 'options'
 require 'keymaps'
+require 'commands'
 require 'lazy-bootstrap'
 require 'lazy-plugins'
 require('custom.matugen_config').setup()
