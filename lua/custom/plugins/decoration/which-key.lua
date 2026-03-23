@@ -47,6 +47,7 @@ return {
       { '<leader>d', group = '[D]ebugging' },
       { '<leader>l', group = '[L]ive Server' },
       { '<leader>m', group = '[M]ulticursor' },
+      { '<leader>p', group = '[P]ersistence' },
       { '<leader>c', group = '[C]opy' },
       { '<leader>cf', group = '[C]opy [F]ile' },
     },

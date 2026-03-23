@@ -8,6 +8,14 @@ return { -- Lua
     need = 1,
     branch = true, -- use git branch to save session
   },
+  init = function()
+    vim.api.nvim_create_autocmd('VimEnter', {
+      callback = function()
+        require('persistence').load()
+      end,
+      nested = true,
+    })
+  end,
   keys = {
     {
       '<leader>ps',
