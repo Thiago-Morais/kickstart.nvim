@@ -31,6 +31,7 @@ local function reload()
   -- Any other options you wish to set upon matugen reloads can also go here!
   local comment_hl = vim.api.nvim_get_hl(0, { name = 'Comment' })
   comment_hl.italic = true
+  ---@diagnostic disable-next-line: param-type-mismatch
   vim.api.nvim_set_hl(0, 'Comment', comment_hl)
 end
 
