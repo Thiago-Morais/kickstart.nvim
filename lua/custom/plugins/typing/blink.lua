@@ -72,7 +72,7 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont', 'git', 'conventional_commits', 'emoji', 'ripgrep' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev', 'nerdfont', 'git', 'conventional_commits', 'emoji' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           nerdfont = {
