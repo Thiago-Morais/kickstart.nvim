@@ -119,9 +119,42 @@ return {
       {
         type = 'pwa-node',
         request = 'launch',
-        name = 'Launch file',
+        name = 'Launch Javascript file',
         program = '${file}',
         cwd = '${workspaceFolder}',
+      },
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach to Node app',
+        address = 'localhost',
+        port = 9229,
+        cwd = '${workspaceFolder}',
+        restart = true,
+      },
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach to Remote',
+        address = 'localhost',
+        localRoot = '${workspaceFolder}',
+        port = 9229,
+        remoteRoot = 'Absolute path to the remote directory containing the program',
+        skipFiles = { '<node_internals>/**' },
+      },
+      {
+        type = 'pwa-node',
+        request = 'attach',
+        name = 'Attach by Process ID',
+        processId = '${command:PickProcess}',
+        skipFiles = { '<node_internals>/**' },
+      },
+      {
+        type = 'pwa-node',
+        request = 'launch',
+        name = 'Launch Program',
+        program = '${command:pickFile}',
+        skipFiles = { '<node_internals>/**' },
       },
     }
     dap.configurations.typescript = dap.configurations.javascript
