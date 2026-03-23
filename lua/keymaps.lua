@@ -54,16 +54,19 @@ vim.keymap.set('n', '<leader>nw', function()
     'nvim;' .. shell,
   }, { detach = true })
 end, { desc = '[N]ew application [W]indow with CWD' })
+
 vim.keymap.set('n', '<leader>cfr', function()
   local path = vim.fn.expand '%'
   vim.fn.setreg('+', path)
   vim.notify('Copied path:' .. path)
 end, { desc = "[C]opy [F]ile's [R]elative path" })
+
 vim.keymap.set({ 'n', 'x' }, '<leader>cfa', function()
   local path = vim.fn.expand '%:p'
   vim.fn.setreg('+', path)
   vim.notify('Copied path:' .. path)
 end, { desc = "[C]opy [F]ile's [A]bsolute path" })
+
 vim.keymap.set({ 'n', 'x' }, '<leader>cff', function()
   local path = vim.fn.expand '%:f'
   vim.fn.setreg('+', path)
