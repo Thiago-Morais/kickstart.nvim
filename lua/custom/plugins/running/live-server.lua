@@ -2,10 +2,15 @@ return {
   'barrett-ruth/live-server.nvim',
   build = 'npm install -g live-server',
   cmd = { 'LiveServerStart', 'LiveServerStop', 'LiveServerToggle' },
-  config = true,
   keys = {
-    { '<leader>ls', '<cmd>LiveServerStart<CR>', desc = 'Start Live Server' },
-    { '<leader>lx', '<cmd>LiveServerStop<CR>', desc = 'Stop Live Server' },
-    { '<leader>lt', '<cmd>LiveServerToggle<CR>', desc = 'Toggle Live Server' },
+    { '<leader>ls', '<Plug>(live-server-start)', desc = 'Start Live Server' },
+    { '<leader>lx', '<Plug>(live-server-stop)', desc = 'Stop Live Server' },
+    { '<leader>lt', '<Plug>(live-server-toggle)', desc = 'Toggle Live Server' },
   },
+  init = function()
+    vim.g.live_server = {
+      port = 8080,
+      browser = true,
+    }
+  end,
 }
