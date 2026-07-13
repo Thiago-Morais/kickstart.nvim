@@ -1,3 +1,5 @@
+local is_linked_editing_range_enabled = true
+
 return {
   -- Main LSP Configuration
   'neovim/nvim-lspconfig',
@@ -136,6 +138,13 @@ return {
             vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf })
           end, '[T]oggle [I]nline Completion')
         end
+
+        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_linkedEditingRange, event.buf) then
+          map('<leader>tr', function()
+            is_linked_editing_range_enabled = not is_linked_editing_range_enabled
+            vim.lsp.linked_editing_range.enable(is_linked_editing_range_enabled)
+          end, '[T]oggle Linked Editing [R]ange', mode)
+        end
       end,
     })
 
@@ -152,6 +161,8 @@ return {
     })
 
     vim.lsp.inline_completion.enable(true)
+
+    vim.lsp.linked_editing_range.enable(is_linked_editing_range_enabled)
 
     -- Diagnostic Config
     -- See :help vim.diagnostic.Opts
