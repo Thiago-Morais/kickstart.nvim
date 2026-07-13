@@ -55,6 +55,7 @@ return { -- Autoformat
       bash = { 'beautysh' },
       sh = { 'beautysh' },
       hyprland = { 'hyprls' },
+      cpp = { 'clang-format' },
       ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
       -- ['_'] = { 'prettier', lsp_format = 'fallback', stop_after_first = true },
     },
