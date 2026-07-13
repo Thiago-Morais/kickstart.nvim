@@ -130,6 +130,12 @@ return {
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
         end
+
+        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlineCompletion, event.buf) then
+          map('<leader>ti', function()
+            vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf })
+          end, '[T]oggle [I]nline Completion')
+        end
       end,
     })
 
@@ -144,6 +150,8 @@ return {
         vim.lsp.codelens.enable(true, { bufnr = args.buf })
       end,
     })
+
+    vim.lsp.inline_completion.enable(true)
 
     -- Diagnostic Config
     -- See :help vim.diagnostic.Opts
