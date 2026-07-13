@@ -60,6 +60,8 @@ return {
         --  For example, in C this would take you to the header.
         map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
+        map('grc', vim.lsp.codelens.run, '[R]un [C]odeLens')
+
         -- Fuzzy find all the symbols in your current document.
         --  Symbols are things like variables, functions, types, etc.
         map('gO', function()
@@ -132,6 +134,16 @@ return {
     })
 
     vim.lsp.inlay_hint.enable(true)
+
+    vim.lsp.codelens.enable(true)
+    -- Auto refresh codelens
+    vim.api.nvim_create_augroup('kickstart-codelens', { clear = true })
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+      group = 'kickstart-codelens',
+      callback = function(args)
+        vim.lsp.codelens.enable(true, { bufnr = args.buf })
+      end,
+    })
 
     -- Diagnostic Config
     -- See :help vim.diagnostic.Opts
