@@ -1,5 +1,5 @@
 return {
-  'barrett-ruth/live-server.nvim',
+  'https://git.barrettruth.com/barrettruth/live-server.nvim',
   build = 'npm install -g live-server',
   cmd = { 'LiveServerStart', 'LiveServerStop', 'LiveServerToggle' },
   keys = {
@@ -10,7 +10,7 @@ return {
   init = function()
     vim.g.live_server = {
       port = 8080,
-      browser = true,
+      -- browser = true,
     }
   end,
 }
