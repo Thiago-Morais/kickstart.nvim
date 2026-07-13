@@ -238,6 +238,11 @@ return {
           },
         },
       },
+      emmet_language_server = {
+        init_options = {
+          showSuggestionsAsSnippets = true,
+        },
+      },
     }
 
     -- Ensure the servers and tools above are installed
