@@ -9,18 +9,36 @@ return {
     local set = require('custom.keymap_extended').set
 
     -- Add or skip cursor above/below the main cursor.
-    set({ 'n', 'x' }, { '<up>', '<leader>mk', '<C-M-k>' }, function()
+    set({ 'n', 'x' }, { '<up>', '<C-M-k>' }, function()
       mc.lineAddCursor(-1)
     end, { desc = 'Add cursor above [k] the main cursor (<C-M-k>)' })
-    set({ 'n', 'x' }, { '<down>', '<leader>mj', '<C-M-j>' }, function()
+    set({ 'n', 'x' }, { '<down>', '<C-M-j>' }, function()
       mc.lineAddCursor(1)
     end, { desc = 'Add cursor below [j] the main cursor (<C-M-j>)' })
     set({ 'n', 'x' }, { '<leader><up>', '<leader>mK' }, function()
-      mc.lineSkipCursor(-1)
+      mc.lineSkipCursor(-1, { skipEmpty = false })
     end, { desc = 'Skip cursor above [k] the main cursor' })
     set({ 'n', 'x' }, { '<leader><down>', '<leader>mJ' }, function()
-      mc.lineSkipCursor(1)
+      mc.lineSkipCursor(1, { skipEmpty = false })
     end, { desc = 'Skip cursor below [j] the main cursor' })
+
+    vim.keymap.set('v', 'I', mc.insertVisual)
+    vim.keymap.set('v', 'A', mc.appendVisual)
+
+    set({ 'v' }, '<leader>ms', mc.splitCursors, { desc = '[S]plit with regex as separator' })
+    set({ 'v' }, '<leader>mm', mc.splitCursors, { desc = 'Select only regex [M]atches' })
+    set({ 'v' }, { '<leader>mr' }, function()
+      mc.transposeCursors(1)
+    end, { desc = '[R]otate clockwise the contents of each visual selection for each cursor.' })
+    set({ 'v' }, { '<leader>mR' }, function()
+      mc.transposeCursors(-1)
+    end, { desc = '[R]otate anti-clockwise the contents of each visual selection for each cursor.' })
+    set({ 'v' }, { '<leader>m<M-j>' }, function()
+      mc.swapCursors(1)
+    end, { desc = '[R]otate clockwise the contents of each visual selection for each cursor.' })
+    set({ 'v' }, { '<leader>m<M-k>' }, function()
+      mc.swapCursors(-1)
+    end, { desc = '[R]otate anti-clockwise the contents of each visual selection for each cursor.' })
 
     -- Add or skip adding a new cursor by matching word/selection
     -- The first command select the word, the second select the next match
@@ -30,17 +48,17 @@ return {
     end
 
     selectThenKeymap({ '<leader>mn', '<C-M-l>' }, function()
-      mc.matchAddCursor(1)
+      mc.matchAddCursor(1, { skipEmpty = false })
     end, { desc = 'Add a [N]ew cursor by matching next word/selection (<C-M-l>)' })
     selectThenKeymap({ '<leader>mN', '<C-M-h>' }, function()
-      mc.matchAddCursor(-1)
+      mc.matchAddCursor(-1, { skipEmpty = false })
     end, { desc = 'Add a [N]ew cursor by matching previous word/selection (<C-M-h>)' })
-    selectThenKeymap({ '<leader>ms' }, function()
+    selectThenKeymap({ '<leader>mL' }, function()
       mc.matchSkipCursor(1)
-    end, { desc = '[S]kip adding a new cursor by matching next word/selection' })
-    selectThenKeymap({ '<leader>mS' }, function()
+    end, { desc = 'Skip adding a new cursor by matching next word/selection' })
+    selectThenKeymap({ '<leader>mH' }, function()
       mc.matchSkipCursor(-1)
-    end, { desc = '[S]kip adding a new cursor by matching previous word/selection' })
+    end, { desc = 'Skip adding a new cursor by matching previous word/selection' })
     selectThenKeymap('<leader>mA', mc.matchAllAddCursors, { desc = 'Add a cursor for [A]ll matches of the word/selection under the cursor.' })
 
     set({ 'x', 'n' }, '<leader>m<c-a>', mc.sequenceIncrement, { desc = 'Add to the number or alphabetic character in the highlighted text.' })
@@ -58,13 +76,14 @@ return {
     -- multiple cursors. This lets you have overlapping mappings.
     mc.addKeymapLayer(function(layerSet)
       -- Select a different cursor as the main one.
-      layerSet({ 'n', 'x' }, '<left>', mc.prevCursor, { desc = 'Select previous cursor' })
-      -- layerSet({ 'n', 'x' }, '<C-M-h>', mc.prevCursor, { desc = 'Select previous cursor' })
-      layerSet({ 'n', 'x' }, '<right>', mc.nextCursor, { desc = 'Select next cursor' })
-      -- layerSet({ 'n', 'x' }, '<C-M-l>', mc.nextCursor, { desc = 'Select next cursor' })
+      layerSet({ 'n', 'x' }, '<leader>mh', mc.prevCursor, { desc = 'Select previous cursor' })
+      layerSet({ 'n', 'x' }, '<leader>mk', mc.prevCursor, { desc = 'Select previous cursor' })
+      layerSet({ 'n', 'x' }, '<leader>ml', mc.nextCursor, { desc = 'Select next cursor' })
+      layerSet({ 'n', 'x' }, '<leader>mj', mc.nextCursor, { desc = 'Select next cursor' })
+
+      layerSet({ 'n', 'x' }, '<leader>ma', mc.alignCursors, { desc = 'Align cursors' })
 
       -- Delete the main cursor.
-      layerSet({ 'n', 'x' }, '<leader>x', mc.deleteCursor, { desc = 'Delete the main cursor' })
       layerSet({ 'n', 'x' }, '<leader>mx', mc.deleteCursor, { desc = 'Delete the main cursor' })
 
       -- Enable and clear cursors using escape.
