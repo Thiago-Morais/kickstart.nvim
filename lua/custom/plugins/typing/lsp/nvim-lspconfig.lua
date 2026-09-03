@@ -81,26 +81,13 @@ return {
         --  the definition of its *type*, not where it was *defined*.
         map('grt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
 
-        -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
-        ---@param client vim.lsp.Client
-        ---@param method vim.lsp.protocol.Method
-        ---@param bufnr? integer some lsp support methods only in specific files
-        ---@return boolean
-        local function client_supports_method(client, method, bufnr)
-          if vim.fn.has 'nvim-0.11' == 1 then
-            return client:supports_method(method, bufnr)
-          else
-            ---@diagnostic disable-next-line: param-type-mismatch
-            return client.supports_method(method, { bufnr = bufnr })
-          end
-        end
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
         --    See `:help CursorHold` for information about when this is executed
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
         local client = vim.lsp.get_client_by_id(event.data.client_id)
-        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+        if client and client:supports_method('textDocument/documentHighlight', event.buf) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -127,23 +114,35 @@ return {
         -- code, if the language server you are using supports them
         --
         -- This may be unwanted, since they displace some of your code
-        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-          map('<leader>th', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-          end, '[T]oggle Inlay [H]ints')
-        end
+        if client then
+          if client:supports_method('textDocument/inlayHint', event.buf) then
+            local action = function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+            end
+            map('<leader>th', action, '[T]oggle Inlay [H]ints')
+          end
 
-        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlineCompletion, event.buf) then
-          map('<leader>ti', function()
-            vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf })
-          end, '[T]oggle [I]nline Completion')
-        end
+          if client:supports_method('textDocument/inlineCompletion', event.buf) then
+            local action = function()
+              vim.lsp.inline_completion.enable(not vim.lsp.inline_completion.is_enabled { bufnr = event.buf })
+            end
+            map('<leader>ti', action, '[T]oggle [I]nline Completion')
+          end
 
-        if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_linkedEditingRange, event.buf) then
-          map('<leader>tr', function()
-            is_linked_editing_range_enabled = not is_linked_editing_range_enabled
-            vim.lsp.linked_editing_range.enable(is_linked_editing_range_enabled)
-          end, '[T]oggle Linked Editing [R]ange', mode)
+          if client:supports_method('textDocument/linkedEditingRange', event.buf) then
+            local action = function()
+              is_linked_editing_range_enabled = not is_linked_editing_range_enabled
+              vim.lsp.linked_editing_range.enable(is_linked_editing_range_enabled)
+            end
+            map('<leader>tr', action, '[T]oggle Linked Editing [R]ange', mode)
+          end
+
+          if client:supports_method('textDocument/codeLens', event.buf) then
+            local action = function()
+              vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled { bufnr = event.buf })
+            end
+            map('<leader>te', action, '[T]oggle CodeL[E]ns', mode)
+          end
         end
       end,
     })
