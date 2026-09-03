@@ -1,5 +1,5 @@
 return { -- Collection of various small independent plugins/modules
-  'echasnovski/mini.nvim',
+  'nvim-mini/mini.nvim',
   version = '*',
   config = function()
     -- Better Around/Inside textobjects
@@ -20,18 +20,6 @@ return { -- Collection of various small independent plugins/modules
     -- - sr)'  - [S]urround [R]eplace [)] [']
     require('mini.surround').setup()
 
-    -- require('mini.animate').setup()
-    local MiniAnimate = require 'mini.animate'
-    MiniAnimate.setup {
-      scroll = {
-        -- Use the fix from this link to avoid glitchs when wrap is on
-        -- https://github.com/nvim-mini/mini.nvim/issues/242#issuecomment-1446046151
-        timing = function(_, n)
-          return math.min(50 / n, 4)
-        end,
-      },
-    }
-
     -- Simple and easy statusline.
     --  You could remove this setup call if you don't like it,
     --  and try some other statusline plugin
@@ -49,6 +37,7 @@ return { -- Collection of various small independent plugins/modules
 
     require('mini.align').setup()
     require('mini.move').setup()
+
     -- require('mini.bracketed').setup()
 
     -- ... and there is more!
