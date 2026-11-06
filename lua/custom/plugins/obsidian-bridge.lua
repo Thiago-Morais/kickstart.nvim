@@ -17,8 +17,8 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
-  config = function()
-    require('obsidian-bridge').setup(obsidian_bridge_settings)
+  config = function(_, opts)
+    require('obsidian-bridge').setup(opts)
     vim.cmd ':ObsidianBridgeOff'
   end,
 }
