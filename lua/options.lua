@@ -55,6 +55,8 @@ vim.filetype.add {
     ['.*/mako/config'] = 'dosini',
     ['.*/hypr/.+%.conf'] = 'hyprlang',
     ['%.env%.[%w_.-]+'] = 'sh',
+    -- ['.*%.blade%.php'] = 'blade',
+    -- ['.*%.blade%.php'] = 'php',
   },
 }
 

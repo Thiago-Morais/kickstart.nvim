@@ -19,6 +19,8 @@ return { -- Highlight, edit, and navigate code
       'json',
       'jsonc',
       'javascript',
+      'php',
+      'blade',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,

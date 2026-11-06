@@ -252,6 +252,19 @@ return {
         init_options = {
           showSuggestionsAsSnippets = true,
         },
+        filetypes = { 'css', 'html', 'javascript', 'less', 'sass', 'scss', 'blade' },
+      },
+      html = {
+        filetypes = { 'html', 'blade' },
+        settings = { css = { lint = { validProperties = {} } } },
+      },
+      cssls = {
+        filetypes = { 'css', 'scss', 'less', 'html', 'blade' },
+        settings = {
+          css = { lint = { validProperties = {} } },
+          scss = { lint = { validProperties = {} } },
+          lcss = { lint = { validProperties = {} } },
+        },
       },
     }
 
