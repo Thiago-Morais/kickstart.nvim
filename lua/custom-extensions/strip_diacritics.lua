@@ -63,7 +63,7 @@ vim.api.nvim_create_user_command('StripDiacritics', function(command_args)
     buffer_lines[line_index] = strip_diacritics(line)
   end
   vim.api.nvim_buf_set_lines(0, command_args.line1 - 1, command_args.line2, false, buffer_lines)
-end, { range = '%', desc = 'Strip discritics within line range' })
+end, { range = '%', desc = 'Strip diacritics within line range' })
 
 -- Strip diacritics only inside text matched by a Vim pattern.
 -- Example: :StripDiacriticsMatching \v"id": "\zs[^"]+\ze"
