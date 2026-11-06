@@ -273,6 +273,7 @@ return {
       'stylua', -- Used to format Lua code
       'html',
       'cssls',
+      'tree-sitter-cli',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
