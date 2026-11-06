@@ -3,9 +3,9 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  { import = 'custom.plugins.mini' },
   { import = 'custom.plugins.decoration' },
   { import = 'custom.plugins.typing' },
-  { import = 'custom.plugins.mini' },
   { import = 'custom.plugins.running' },
   { import = 'custom.plugins.neovim-extension' },
 }
