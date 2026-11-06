@@ -266,6 +266,10 @@ return {
           lcss = { lint = { validProperties = {} } },
         },
       },
+      qmlls = {
+        cmd = { 'qmlls6' },
+        filetypes = { 'qml' },
+      },
     }
 
     -- Ensure the servers and tools above are installed
