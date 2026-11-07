@@ -1,8 +1,12 @@
-return {
-  'pmizio/typescript-tools.nvim',
-  enabled = false,
-  dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-  opts = {
-    expose_as_code_action = { 'all' },
-  },
+-- Disabled to avoid duplicate LSP actions with ts_ls
+do
+  return
+end
+
+vim.pack.add {
+  'https://github.com/nvim-lua/plenary.nvim',
+  'https://github.com/pmizio/typescript-tools.nvim',
+}
+require('typescript-tools').setup {
+  expose_as_code_action = { 'all' },
 }
