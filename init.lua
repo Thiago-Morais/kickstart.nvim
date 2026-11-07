@@ -1,3 +1,6 @@
+-- Enable faster startup by caching compiled Lua modules
+vim.loader.enable()
+
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -9,8 +12,10 @@ vim.g.have_nerd_font = true
 require 'options'
 require 'keymaps'
 require 'commands'
-require 'lazy-bootstrap'
-require 'lazy-plugins'
+-- Build hooks must be registered before any `vim.pack.add` call,
+-- otherwise they won't run when a plugin is first installed.
+require 'pack-build-hooks'
+require 'pack-plugins'
 require('custom.matugen_config').setup()
 require 'custom-extensions'
 
