@@ -1,184 +1,174 @@
-return {
-  'mfussenegger/nvim-dap',
-  dependencies = {
-    'rcarriga/nvim-dap-ui',
-    'nvim-neotest/nvim-nio',
-    'mason-org/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
-    -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
-  },
-  event = 'UIEnter',
-  keys = {
-    -- Basic debugging keymaps, feel free to change to your liking!
-    { '<leader>ds', '<cmd>DapContinue<CR>', desc = '[D]ebug: [S]tart/Continue' },
-    { '<leader>dc', '<cmd>DapContinue<CR>', desc = '[D]ebug: Start/[C]ontinue' },
-    { '<leader>di', '<cmd>DapStepInto<CR>', desc = '[D]ebug: Step [I]nto' },
-    { '<leader>do', '<cmd>DapStepOver<CR>', desc = '[D]ebug: Step [O]ver' },
-    { '<leader>dI', '<cmd>DapStepOut<CR>', desc = '[D]ebug: Step Out (oposite of [I]nto)' },
-    { '<leader>db', '<cmd>DapToggleBreakpoint<CR>', desc = '[D]ebug: Toggle [B]reakpoint' },
-    {
-      '<leader>dB',
-      function()
-        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end,
-      desc = '[D]ebug: Set [B]reakpoint',
-    },
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    {
-      '<leader>dl',
-      function()
-        require('dapui').toggle { reset = true }
-      end,
-      desc = '[D]ebug: See [L]ast session result.',
-    },
-    { '<leader>dt', '<cmd>DapTerminate<CR>', desc = '[D]ebug: [T]erminate' },
-  },
-  config = function()
-    local dap = require 'dap'
-    local dapui = require 'dapui'
+-- Debug Adapter Protocol client, with a UI and Mason-managed debuggers
+-- Requires mason.nvim to be set up first (done in the LSP config).
 
-    require('mason-nvim-dap').setup {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
-      automatic_installation = true,
-
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
-      handlers = {},
-
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
-        'js-debug-adapter',
-      },
-    }
-
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
-      icons = { expanded = '', collapsed = '', current_frame = '' },
-      controls = {
-        icons = {
-          pause = '',
-          play = '',
-          step_into = '',
-          step_over = '',
-          step_out = '',
-          step_back = '',
-          run_last = '↻',
-          terminate = '',
-          disconnect = '󰅛',
-        },
-      },
-    }
-
-    -- Change breakpoint icons
-    vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    local breakpoint_icons = vim.g.have_nerd_font
-        and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    for type, icon in pairs(breakpoint_icons) do
-      local tp = 'Dap' .. type
-      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    end
-
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
-
-    local mason_packages_path = vim.fn.stdpath 'data' .. '/mason/packages'
-
-    -- Install javascript specific config
-    dap.adapters['pwa-node'] = {
-      type = 'server',
-      host = 'localhost',
-      port = '${port}',
-      executable = {
-        command = 'node',
-        args = {
-          mason_packages_path .. '/js-debug-adapter/js-debug/src/dapDebugServer.js',
-          '${port}',
-        },
-      },
-    }
-    dap.configurations.javascript = {
-      {
-        type = 'pwa-node',
-        request = 'launch',
-        name = 'Launch Javascript file',
-        program = '${file}',
-        cwd = '${workspaceFolder}',
-      },
-      {
-        type = 'pwa-node',
-        request = 'attach',
-        name = 'Attach to Node app',
-        address = 'localhost',
-        port = 9229,
-        cwd = '${workspaceFolder}',
-        restart = true,
-      },
-      {
-        type = 'pwa-node',
-        request = 'attach',
-        name = 'Attach to Remote',
-        address = 'localhost',
-        localRoot = '${workspaceFolder}',
-        port = 9229,
-        remoteRoot = 'Absolute path to the remote directory containing the program',
-        skipFiles = { '<node_internals>/**' },
-      },
-      {
-        type = 'pwa-node',
-        request = 'attach',
-        name = 'Attach by Process ID',
-        processId = '${command:PickProcess}',
-        skipFiles = { '<node_internals>/**' },
-      },
-      {
-        type = 'pwa-node',
-        request = 'launch',
-        name = 'Launch Typescript on Current File',
-        cwd = '${workspaceFolder}',
-        runtimeExecutable = 'npx',
-        runtimeArgs = { 'tsx' },
-        program = '${file}',
-        skipFiles = { '<node_internals>/**' },
-      },
-      {
-        type = 'pwa-node',
-        request = 'launch',
-        name = 'Launch Typescript',
-        cwd = '${workspaceFolder}',
-        runtimeExecutable = 'npx',
-        runtimeArgs = { 'tsx' },
-        program = '${command:pickFile}',
-        skipFiles = { '<node_internals>/**' },
-      },
-      {
-        type = 'pwa-node',
-        request = 'launch',
-        name = 'Launch Program',
-        program = '${command:pickFile}',
-        skipFiles = { '<node_internals>/**' },
-      },
-    }
-    dap.configurations.typescript = dap.configurations.javascript
-    dap.configurations.javascriptreact = dap.configurations.javascript
-    dap.configurations.typescriptreact = dap.configurations.javascript
-  end,
+vim.pack.add {
+  'https://github.com/mfussenegger/nvim-dap',
+  'https://github.com/rcarriga/nvim-dap-ui',
+  'https://github.com/nvim-neotest/nvim-nio',
+  'https://github.com/mason-org/mason.nvim',
+  'https://github.com/jay-babu/mason-nvim-dap.nvim',
+  -- Add your own debuggers here
+  'https://github.com/leoluz/nvim-dap-go',
 }
+
+-- Basic debugging keymaps, feel free to change to your liking!
+vim.keymap.set('n', '<leader>ds', '<cmd>DapContinue<CR>', { desc = '[D]ebug: [S]tart/Continue' })
+vim.keymap.set('n', '<leader>dc', '<cmd>DapContinue<CR>', { desc = '[D]ebug: Start/[C]ontinue' })
+vim.keymap.set('n', '<leader>di', '<cmd>DapStepInto<CR>', { desc = '[D]ebug: Step [I]nto' })
+vim.keymap.set('n', '<leader>do', '<cmd>DapStepOver<CR>', { desc = '[D]ebug: Step [O]ver' })
+vim.keymap.set('n', '<leader>dI', '<cmd>DapStepOut<CR>', { desc = '[D]ebug: Step Out (oposite of [I]nto)' })
+vim.keymap.set('n', '<leader>db', '<cmd>DapToggleBreakpoint<CR>', { desc = '[D]ebug: Toggle [B]reakpoint' })
+vim.keymap.set('n', '<leader>dB', function()
+  require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+end, { desc = '[D]ebug: Set [B]reakpoint' })
+-- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+vim.keymap.set('n', '<leader>dl', function()
+  require('dapui').toggle { reset = true }
+end, { desc = '[D]ebug: See [L]ast session result.' })
+vim.keymap.set('n', '<leader>dt', '<cmd>DapTerminate<CR>', { desc = '[D]ebug: [T]erminate' })
+
+local dap = require 'dap'
+local dapui = require 'dapui'
+
+require('mason-nvim-dap').setup {
+  -- Makes a best effort to setup the various debuggers with
+  -- reasonable debug configurations
+  automatic_installation = true,
+
+  -- You can provide additional configuration to the handlers,
+  -- see mason-nvim-dap README for more information
+  handlers = {},
+
+  -- You'll need to check that you have the required things installed
+  -- online, please don't ask me how to install them :)
+  ensure_installed = {
+    -- Update this to ensure that you have the debuggers for the langs you want
+    'delve',
+    'js-debug-adapter',
+  },
+}
+
+-- Dap UI setup
+-- For more information, see |:help nvim-dap-ui|
+dapui.setup {
+  icons = { expanded = '', collapsed = '', current_frame = '' },
+  controls = {
+    icons = {
+      pause = '',
+      play = '',
+      step_into = '',
+      step_over = '',
+      step_out = '',
+      step_back = '',
+      run_last = '↻',
+      terminate = '',
+      disconnect = '󰅛',
+    },
+  },
+}
+
+-- Change breakpoint icons
+vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+local breakpoint_icons = vim.g.have_nerd_font
+    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+  or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+for type, icon in pairs(breakpoint_icons) do
+  local tp = 'Dap' .. type
+  local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+  vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+end
+
+dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+-- Install golang specific config
+require('dap-go').setup {
+  delve = {
+    -- On Windows delve must be run attached or it crashes.
+    -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+    detached = vim.fn.has 'win32' == 0,
+  },
+}
+
+local mason_packages_path = vim.fn.stdpath 'data' .. '/mason/packages'
+
+-- Install javascript specific config
+dap.adapters['pwa-node'] = {
+  type = 'server',
+  host = 'localhost',
+  port = '${port}',
+  executable = {
+    command = 'node',
+    args = {
+      mason_packages_path .. '/js-debug-adapter/js-debug/src/dapDebugServer.js',
+      '${port}',
+    },
+  },
+}
+dap.configurations.javascript = {
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch Javascript file',
+    program = '${file}',
+    cwd = '${workspaceFolder}',
+  },
+  {
+    type = 'pwa-node',
+    request = 'attach',
+    name = 'Attach to Node app',
+    address = 'localhost',
+    port = 9229,
+    cwd = '${workspaceFolder}',
+    restart = true,
+  },
+  {
+    type = 'pwa-node',
+    request = 'attach',
+    name = 'Attach to Remote',
+    address = 'localhost',
+    localRoot = '${workspaceFolder}',
+    port = 9229,
+    remoteRoot = 'Absolute path to the remote directory containing the program',
+    skipFiles = { '<node_internals>/**' },
+  },
+  {
+    type = 'pwa-node',
+    request = 'attach',
+    name = 'Attach by Process ID',
+    processId = '${command:PickProcess}',
+    skipFiles = { '<node_internals>/**' },
+  },
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch Typescript on Current File',
+    cwd = '${workspaceFolder}',
+    runtimeExecutable = 'npx',
+    runtimeArgs = { 'tsx' },
+    program = '${file}',
+    skipFiles = { '<node_internals>/**' },
+  },
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch Typescript',
+    cwd = '${workspaceFolder}',
+    runtimeExecutable = 'npx',
+    runtimeArgs = { 'tsx' },
+    program = '${command:pickFile}',
+    skipFiles = { '<node_internals>/**' },
+  },
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch Program',
+    program = '${command:pickFile}',
+    skipFiles = { '<node_internals>/**' },
+  },
+}
+dap.configurations.typescript = dap.configurations.javascript
+dap.configurations.javascriptreact = dap.configurations.javascript
+dap.configurations.typescriptreact = dap.configurations.javascript
