@@ -11,6 +11,7 @@ return {
     'nvim-neotest/neotest-vim-test',
     'nvim-neotest/neotest-jest',
     'marilari88/neotest-vitest',
+    'thenbe/neotest-playwright',
   },
 
   config = function()
@@ -25,6 +26,12 @@ return {
         },
         require 'neotest-jest',
         require 'neotest-vitest',
+        require('neotest-playwright').adapter {
+          options = {
+            persist_project_selection = true,
+            enable_dynamic_test_discovery = true,
+          },
+        },
       },
     }
   end,
