@@ -168,7 +168,7 @@ return {
     vim.diagnostic.config {
       severity_sort = true,
       float = { border = 'rounded', source = 'if_many' },
-      underline = { severity = vim.diagnostic.severity.ERROR },
+      underline = { severity = { min = vim.diagnostic.severity.WARN } },
       signs = vim.g.have_nerd_font and {
         text = {
           [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -177,6 +177,16 @@ return {
           [vim.diagnostic.severity.HINT] = '󰌶 ',
         },
       } or {},
+      -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+      jump = {
+        on_jump = function(_, bufnr)
+          vim.diagnostic.open_float {
+            bufnr = bufnr,
+            scope = 'cursor',
+            focus = false,
+          }
+        end,
+      },
       virtual_text = {
         source = true,
         spacing = 2,
