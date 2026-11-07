@@ -134,14 +134,14 @@ return {
               is_linked_editing_range_enabled = not is_linked_editing_range_enabled
               vim.lsp.linked_editing_range.enable(is_linked_editing_range_enabled)
             end
-            map('<leader>tr', action, '[T]oggle Linked Editing [R]ange', mode)
+            map('<leader>tr', action, '[T]oggle Linked Editing [R]ange')
           end
 
           if client:supports_method('textDocument/codeLens', event.buf) then
             local action = function()
               vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled { bufnr = event.buf })
             end
-            map('<leader>te', action, '[T]oggle CodeL[E]ns', mode)
+            map('<leader>te', action, '[T]oggle CodeL[E]ns')
           end
         end
       end,
