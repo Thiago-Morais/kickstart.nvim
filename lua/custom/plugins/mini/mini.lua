@@ -1,9 +1,24 @@
 -- Collection of various small independent plugins/modules
-vim.pack.add { { src = 'https://github.com/nvim-mini/mini.nvim', version = vim.version.range '*' } }
+vim.pack.add {
+  { src = 'https://github.com/nvim-mini/mini.nvim', version = vim.version.range '*' },
+  -- Only its icon data is used, to fill the gaps in mini.icons (see `devicons_fallback.lua`)
+  'https://github.com/nvim-tree/nvim-web-devicons',
+}
 
 -- If a nerd font is available, load the icons module for pretty icons in various plugins.
 if vim.g.have_nerd_font then
-  require('mini.icons').setup()
+  local devicons_fallback = require 'custom.plugins.mini.devicons_fallback'
+  local file_overrides = devicons_fallback.file_overrides()
+  require('mini.icons').setup { file = file_overrides }
+
+  -- Checking which extensions mini.icons doesn't know is slow, so add those icons after startup
+  vim.api.nvim_create_autocmd('VimEnter', {
+    group = vim.api.nvim_create_augroup('mini-icons-devicons-extensions', { clear = true }),
+    once = true,
+    callback = vim.schedule_wrap(function()
+      require('mini.icons').setup { file = file_overrides, extension = devicons_fallback.extension_overrides() }
+    end),
+  })
   -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
   MiniIcons.mock_nvim_web_devicons()
 end
