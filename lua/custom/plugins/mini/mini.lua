@@ -1,7 +1,16 @@
 return { -- Collection of various small independent plugins/modules
   'nvim-mini/mini.nvim',
   version = '*',
+  -- Load before plugins that use icons, so mini.icons can stand in for nvim-web-devicons
+  priority = 900,
   config = function()
+    -- If a nerd font is available, load the icons module for pretty icons in various plugins.
+    if vim.g.have_nerd_font then
+      require('mini.icons').setup()
+      -- Used for backwards compatibility with plugins that require `nvim-web-devicons` (e.g. telescope.nvim)
+      MiniIcons.mock_nvim_web_devicons()
+    end
+
     -- Better Around/Inside textobjects
     --
     -- Examples:
