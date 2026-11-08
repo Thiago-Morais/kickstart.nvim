@@ -1,5 +1,5 @@
 return {
-  'https://git.barrettruth.com/barrettruth/live-server.nvim',
+  'https://github.com/Thiago-Morais/live-server.nvim',
   build = 'npm install -g live-server',
   cmd = { 'LiveServerStart', 'LiveServerStop', 'LiveServerToggle' },
   keys = {
