@@ -1,7 +1,11 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
-return {
-  { import = 'custom.plugins.typing.lsp' },
-}
+require 'custom.plugins.typing.guess-indent'
+require 'custom.plugins.typing.blink'
+require 'custom.plugins.typing.lsp'
+require 'custom.plugins.typing.csvview'
+require 'custom.plugins.typing.languagetool'
+require 'custom.plugins.typing.lorem'
+require 'custom.plugins.typing.multicursor'
+require 'custom.plugins.typing.refactoring'
+require 'custom.plugins.typing.text-case'
+require 'custom.plugins.typing.comment'
+require 'custom.plugins.typing.fcitx'
