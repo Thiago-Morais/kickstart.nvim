@@ -6,4 +6,3 @@ nvim
 spell/
 lazy-lock.json
 matugen.lua
-.repro/
