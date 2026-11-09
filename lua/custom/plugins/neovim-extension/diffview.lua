@@ -25,3 +25,4 @@ vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = 'Open [G]it 
 vim.keymap.set('n', '<leader>gD', '<cmd>DiffviewClose<CR>', { desc = 'Close [G]it [D]iffView' })
 vim.keymap.set('n', '<leader>gf', '<cmd>DiffviewFileHistory %<CR>', { desc = 'Open [G]it [F]ile history for the current file' })
 vim.keymap.set('n', '<leader>gF', '<cmd>DiffviewClose<CR>', { desc = 'Close [G]it [F]ile history for the current file' })
+vim.keymap.set('n', '<leader>g^', '<cmd>DiffviewOpen @^<CR>', { desc = 'Open [G]it DiffView for the previous[^] commit' })
