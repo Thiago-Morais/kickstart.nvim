@@ -217,9 +217,9 @@
       "src": "https://github.com/epwalsh/obsidian.nvim",
       "version": ">=0.0.0"
     },
-    "persistence.nvim": {
-      "rev": "b20b2a7887bd39c1a356980b45e03250f3dce49c",
-      "src": "https://github.com/folke/persistence.nvim"
+    "persisted.nvim": {
+      "rev": "b865adb40cf43ace229f09cd4051d8d03b3f6fa8",
+      "src": "https://www.github.com/olimorris/persisted.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
