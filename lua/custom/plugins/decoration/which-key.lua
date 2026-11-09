@@ -47,7 +47,7 @@ require('which-key').setup {
     { '<leader>d', group = '[D]ebugging' },
     { '<leader>l', group = '[L]ive Server' },
     { '<leader>m', group = '[M]ulticursor' },
-    { '<leader>p', group = '[P]ersistence' },
+    { '<leader>p', group = '[P]ersisted sessions' },
     { '<leader>c', group = '[C]opy' },
     { '<leader>cf', group = '[C]opy [F]ile' },
     { 'gr', group = 'LSP Actions', mode = { 'n' } },

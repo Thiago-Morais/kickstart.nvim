@@ -34,3 +34,17 @@ vim.api.nvim_create_autocmd('User', {
     vim.api.nvim_input '<ESC>:%bd<CR>'
   end,
 })
+
+vim.keymap.set('n', '<leader>pl', '<cmd>Persisted load<CR>', { desc = '[L]oad the session for this folder and branch' })
+vim.keymap.set('n', '<leader>pL', '<cmd>Persisted load_last<CR>', { desc = '[L]oad the last session' })
+vim.keymap.set('n', '<leader>pf', '<cmd>Telescope persisted<CR>', { desc = '[F]ind a session (<C-d> deletes, <C-b> switches branch)' })
+vim.keymap.set('n', '<leader>ps', '<cmd>Persisted save<CR>', { desc = '[S]ave the session' })
+vim.keymap.set('n', '<leader>pS', function()
+  vim.ui.input({ prompt = 'Session name: ' }, function(name)
+    if name and name ~= '' then
+      vim.cmd.Persisted { args = { 'save', name } }
+    end
+  end)
+end, { desc = '[S]ave the session under a name' })
+vim.keymap.set('n', '<leader>pq', '<cmd>Persisted stop<CR>', { desc = "[Q]uit recording: this session won't be saved on exit" })
+vim.keymap.set('n', '<leader>pD', '<cmd>Persisted delete_current<CR>', { desc = '[D]elete the current session' })
