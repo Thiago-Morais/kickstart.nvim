@@ -257,6 +257,18 @@ do
           -- diagnostics = { disable = { 'missing-fields' } },
         },
       },
+      handlers = {
+        -- Hides lua_ls's error about refusing the home folder as a workspace (if home is a git repo, loose Lua files
+        -- under it resolve there). The file still gets single-file features. Matches the FAQ link because the message
+        -- text itself is translated to the system language.
+        ['window/showMessage'] = function(err, result, context)
+          local is_home_workspace_refusal = result.message:find('faq#why-is-the-server-scanning-the-wrong-folder', 1, true)
+          if is_home_workspace_refusal then
+            return
+          end
+          return vim.lsp.handlers['window/showMessage'](err, result, context)
+        end,
+      },
     },
     emmet_language_server = {
       init_options = {
