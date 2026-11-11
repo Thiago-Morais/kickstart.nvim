@@ -7,7 +7,6 @@ local function source_matugen()
   local file, err = io.open(matugen_path, 'r')
   -- If the matugen file does not exist (yet or at all), we must initialize a color scheme ourselves
   if err ~= nil then
-    -- if true then
     -- Some placeholder theme, this will be overwritten once matugen kicks in
     -- vim.cmd 'colorscheme base16-catppuccin-mocha'
     vim.cmd.colorscheme 'tokyonight-night'
@@ -33,6 +32,10 @@ local function reload()
   comment_hl.italic = true
   ---@diagnostic disable-next-line: param-type-mismatch
   vim.api.nvim_set_hl(0, 'Comment', comment_hl)
+
+  -- mini.base16 runs `highlight clear` without triggering ColorScheme,
+  -- so plugins that restore their highlights on that event never get the chance
+  vim.api.nvim_exec_autocmds('ColorScheme', { modeline = false })
 end
 
 function M.setup()

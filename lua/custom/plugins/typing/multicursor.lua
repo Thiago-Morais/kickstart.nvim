@@ -1,9 +1,16 @@
+M = {}
+
 vim.pack.add { { src = 'https://github.com/jake-stewart/multicursor.nvim', version = '1.0' } }
+local mc = require 'multicursor-nvim'
 
-do
-  local mc = require 'multicursor-nvim'
+function M.setup()
   mc.setup()
+  M.add_keymaps()
+  M.set_multicursor_highlights()
+  M.reload_highlights_on_color_scheme_change()
+end
 
+function M.add_keymaps()
   -- local set = vim.keymap.set
   local set = require('custom.keymap_extended').set
 
@@ -94,7 +101,9 @@ do
       end
     end, { desc = 'Enable and clear cursors using escape' })
   end)
+end
 
+function M.set_multicursor_highlights()
   -- Customize how cursors look.
   local hl = vim.api.nvim_set_hl
   hl(0, 'MultiCursorCursor', { reverse = true })
@@ -105,3 +114,9 @@ do
   hl(0, 'MultiCursorDisabledVisual', { link = 'Visual' })
   hl(0, 'MultiCursorDisabledSign', { link = 'SignColumn' })
 end
+
+function M.reload_highlights_on_color_scheme_change()
+  vim.api.nvim_create_autocmd('ColorScheme', { callback = M.set_multicursor_highlights })
+end
+
+return M

@@ -4,7 +4,7 @@ require 'custom.plugins.typing.lsp'
 require 'custom.plugins.typing.csvview'
 require 'custom.plugins.typing.languagetool'
 require 'custom.plugins.typing.lorem'
-require 'custom.plugins.typing.multicursor'
+require('custom.plugins.typing.multicursor').setup()
 require 'custom.plugins.typing.refactoring'
 require 'custom.plugins.typing.text-case'
 require 'custom.plugins.typing.comment'
