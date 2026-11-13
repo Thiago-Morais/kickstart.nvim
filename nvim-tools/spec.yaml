@@ -1,0 +1,24 @@
+# Docker Sandboxes kit that adds Neovim and StyLua to the agent's sandbox. Used by ../sbxenv.yaml.
+# We use v2 because the pi specs is locked to v2 and v3 can't be combined with it
+# https://hub.docker.com/r/sbx/pi-kit#pi
+# https://docs.docker.com/ai/sandboxes/customize/kits-v2/#schema-versions
+schemaVersion: "2"
+kind: mixin
+name: nvim-tools
+description: Neovim 0.12+ for the nvim config
+args:
+    nvim_version:
+        default: stable
+permissions:
+    network:
+        allow:
+            - github.com
+            - "*.githubusercontent.com"
+setup:
+    install:
+        # We use the direct url because apt is always outdated
+        - description: Install Neovim
+          command: |
+              set -eu
+              curl -fsSL "https://github.com/neovim/neovim/releases/download/${{ kit.args.nvim_version }}/nvim-linux-x86_64.tar.gz" | tar -xz -C /opt
+              ln -sf /opt/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim

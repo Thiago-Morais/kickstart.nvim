@@ -1,0 +1,36 @@
+# Docker Sandboxes environment for the agents. To be used on a sibling worktree
+# run `sbx env run` from ../<my-dir>-agent (not from .).
+schemaVersion: "1"
+name: nvim
+agent: docker.io/sbx/pi-kit:latest
+workspace: .
+
+kits:
+    # We go up first so that a sibling worktree points to the main worktree
+    - ../nvim/nvim-tools
+
+args:
+    gitdir:
+        # default: .
+        # Use this for a submodule inside a Home git repo
+        default: ../../.git/modules/.config/nvim
+
+additionalWorkspaces:
+    - path: ${{ env.args.gitdir }}
+      readOnly: true
+    - path: ${{ env.args.gitdir }}/objects
+    # Allow work on branches starting with `agent`
+    # https://git-scm.com/docs/gitrepository-layout#Documentation/gitrepository-layout.txt-refsheadsname
+    - path: ${{ env.args.gitdir }}/refs/heads/agent
+    # https://git-scm.com/docs/gitrepository-layout#Documentation/gitrepository-layout.txt-logsrefsheadsname
+    - path: ${{ env.args.gitdir }}/logs/refs/heads/agent
+    # Allow work on the `nvim-agent` branch
+    - path: ${{ env.args.gitdir }}/worktrees/nvim-agent
+    - path: ./.git
+      readOnly: true
+
+env:
+    GIT_AUTHOR_NAME: Pi Agent
+    GIT_AUTHOR_EMAIL: pi-agent@localhost
+    GIT_COMMITTER_NAME: Pi Agent
+    GIT_COMMITTER_EMAIL: pi-agent@localhost
