@@ -6,4 +6,5 @@
 - Whenever commits get combined, keep unrelated changes in separate commits.
 - You can push your own `agent/*` branch without asking. Ask before pushing any other branch.
 - Ask before force-pushing to any branch including your own.
+- Ask before deleting a remote branch, even your own.
 - Don't sync from upstream (`nvim-lua/kickstart.nvim`).
