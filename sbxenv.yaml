@@ -1,5 +1,5 @@
 # Docker Sandboxes environment for the agents. To be used on a sibling worktree
-# run `sbx env run` from ../<my-dir>-agent (not from .).
+# run `sbx env run` from ../<my-dir>-agent not from <my-dir> (that is `.`)
 schemaVersion: "1"
 name: nvim
 agent: docker.io/sbx/pi-kit:latest
@@ -14,6 +14,8 @@ args:
         # default: .
         # Use this for a submodule inside a Home git repo
         default: ../../.git/modules/.config/nvim
+    worktree:
+        default: nvim-agent
 
 additionalWorkspaces:
     - path: ${{ env.args.gitdir }}
@@ -24,8 +26,8 @@ additionalWorkspaces:
     - path: ${{ env.args.gitdir }}/refs/heads/agent
     # https://git-scm.com/docs/gitrepository-layout#Documentation/gitrepository-layout.txt-logsrefsheadsname
     - path: ${{ env.args.gitdir }}/logs/refs/heads/agent
-    # Allow work on the `nvim-agent` branch
-    - path: ${{ env.args.gitdir }}/worktrees/nvim-agent
+    # Allow work on the agent's worktree
+    - path: ${{ env.args.gitdir }}/worktrees/${{ env.args.worktree }}
     - path: ./.git
       readOnly: true
 
