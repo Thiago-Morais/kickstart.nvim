@@ -40,6 +40,9 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>tD', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = '[T]oggle [D]iagnostic messages' })
 vim.keymap.set('n', '<leader>nt', '<cmd>tabnew %<CR>', { desc = 'Open a [N]ew [T]ab page with the current file' })
 
 vim.keymap.set('n', '<leader>wt', '<cmd>split | terminal<CR>', { desc = 'Open a new [W]indow with a [T]erminal' })
