@@ -20,6 +20,11 @@ Stop and ask in chat before:
 
 From the repo root, `nvim --headless +qa` must print no errors.
 
+## Plan Mode
+
+- Make the plan extremely concise. Sacrifice grammar for the sake of concision.
+- At the end of each plan, give me a list of unresolved questions to answer, if any.
+
 ## Docs
 
 - [docs/PLUGINS.md](docs/PLUGINS.md): adding, moving or configuring plugins, and where files go
