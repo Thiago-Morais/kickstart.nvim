@@ -1,11 +1,12 @@
 # Docker Sandboxes environment for the agents. To be used on a sibling worktree
-# run `sbx env run` from ../<my-dir>-agent not from <my-dir> (that is `.`)
+# run `sbx env run` from the main workspace (usually `~/.config/nvim`)
 schemaVersion: "1"
 name: nvim
-agent: docker.io/sbx/pi-kit:latest
-workspace: .
+agent: pi
+workspace: ../nvim-agent
 
 kits:
+    - docker.io/sbx/pi-kit:latest
     # We go up first so that a sibling worktree points to the main worktree
     - ../nvim/nvim-tools
 
@@ -28,7 +29,7 @@ additionalWorkspaces:
     - path: ${{ env.args.gitdir }}/logs/refs/heads/agent
     # Allow work on the agent's worktree
     - path: ${{ env.args.gitdir }}/worktrees/${{ env.args.worktree }}
-    - path: ./.git
+    - path: ../${{ env.args.worktree }}/.git
       readOnly: true
 
 env:
@@ -36,3 +37,8 @@ env:
     GIT_AUTHOR_EMAIL: pi-agent@localhost
     GIT_COMMITTER_NAME: Pi Agent
     GIT_COMMITTER_EMAIL: pi-agent@localhost
+
+lifecycle:
+    postCreate:
+        - name: Install pi extensions
+          command: sbx exec "$SBX_SANDBOX_NAME" pi install npm:pi-web-search
