@@ -4,6 +4,7 @@
 - Every commit must start Neovim without errors.
 - Never rewrite history without asking. Fix things with a new commit.
 - Every change gets a new `agent/<topic>` branch, created from `agent/dev`.
+- Each branch shold be limited to its own scope. Multiple scopes require multiple branches.
 - Ask before merging a topic branch into `agent/dev`.
 - Never commit to or merge into `master`.
 - Whenever commits get combined, keep unrelated changes in separate commits.
