@@ -1,4 +1,5 @@
-# Docker Sandboxes kit that adds Neovim and StyLua to the agent's sandbox. Used by ../sbxenv.yaml.
+# Docker Sandboxes kit that adds Neovim to the agent's sandbox and installs the config's plugins and
+# Mason tools (StyLua included) on startup. Used by ../sbxenv.yaml.
 # We use v2 because the pi specs is locked to v2 and v3 can't be combined with it
 # https://hub.docker.com/r/sbx/pi-kit#pi
 # https://docs.docker.com/ai/sandboxes/customize/kits-v2/#schema-versions
