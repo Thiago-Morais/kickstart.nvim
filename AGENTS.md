@@ -18,7 +18,7 @@ On the user's first message, read [docs/STARTUP.md](docs/STARTUP.md)
 - Discuss proposed changes before editing, unless asked to make them.
 - Check every claim about tools, docs or the environment before writing it: run it, read the source, or search the web. If something can't be checked where you are, say so.
 - Comment only code that is counterintuitive or complex, in any file type.
-- `docs/HANDOFF.md` (gitignored) passes state between agents. Read it before starting and check its claims against the repo. Before stopping, rewrite it following [docs/HANDOFF-FORMAT.md](docs/HANDOFF-FORMAT.md).
+- `docs/CONTINUITY.md` (gitignored) passes state between agents. Read it before starting and check its claims against the repo. Before stopping, rewrite it following [docs/CONTINUITY-FORMAT.md](docs/CONTINUITY-FORMAT.md).
 
 ## Checking a change
 
