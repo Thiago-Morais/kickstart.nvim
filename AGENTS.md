@@ -29,11 +29,14 @@ From the repo root, `nvim --headless +qa` must print no errors.
 - Make the plan extremely concise. Sacrifice grammar for the sake of concision.
 - At the end of each plan, give me a list of unresolved questions to answer, if any.
 
-## Docs
+## Environment documents
 
 - [docs/SANDBOX.md](docs/SANDBOX.md): if working inside Docker Sandboxes, read this document (`$SANDBOX_NAME` is set)
 - [docs/PI.md](docs/PI.md): if working within Pi, read this document (`$PI_*` are set)
-- [docs/GIT.md](docs/GIT.md): before working with git
-- [docs/LUA.md](docs/LUA.md): before working with Lua
+
+## Docs
+
+- [docs/GIT.md](docs/GIT.md): before anything involving git
+- [docs/LUA.md](docs/LUA.md): before work with Lua
 - [docs/PLUGINS.md](docs/PLUGINS.md): before working with Neovim plugins
 - [docs/MARKDOWN.md](docs/MARKDOWN.md): before working with Markdown
