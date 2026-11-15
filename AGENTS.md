@@ -6,7 +6,7 @@ You're working on a personal Neovim config, forked from kickstart.nvim and heavi
 
 Stop and ask in chat before:
 
-- deleting files.
+- deleting files outside `/tmp/`.
 - running `:lua vim.pack.update()` or `vim.pack.del`, which change the installed plugins and the lockfile.
 
 ## Startup
