@@ -7,3 +7,8 @@ spell/
 .DS_Store
 matugen.lua
 CONTINUITY.md
+
+# Pi config dir (PI_CODING_AGENT_DIR); only the shared config is tracked
+/.pi-agent/*
+!/.pi-agent/settings.json
+!/.pi-agent/web-search.json

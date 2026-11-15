@@ -1,0 +1,13 @@
+{
+  "searchRouting": {
+    "providers": ["exa", "keenable", "duckduckgo"],
+    "fallbackOn": ["transient", "quota", "network", "invalid-response", "empty"]
+  },
+  "fetchRouting": {
+    "providers": ["http", "jina"],
+    "allowRemoteHostedProviders": true
+  },
+  "ssrf": {
+    "trustEnvProxy": true
+  }
+}

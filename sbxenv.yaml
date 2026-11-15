@@ -37,6 +37,7 @@ env:
     GIT_AUTHOR_EMAIL: pi-agent@localhost
     GIT_COMMITTER_NAME: Pi Agent
     GIT_COMMITTER_EMAIL: pi-agent@localhost
+    PI_CODING_AGENT_DIR: ${{ env.fileDir }}/../${{ env.args.worktree }}/.pi-agent
 
 lifecycle:
     postCreate:
