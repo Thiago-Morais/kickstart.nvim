@@ -21,6 +21,10 @@ permissions:
             - sum.golang.org
             - skills.sh
             - www.skills.sh
+            - mcp.exa.ai
+            - html.duckduckgo.com
+            - api.keenable.ai
+            - r.jina.ai
 
 environment:
     variables:
