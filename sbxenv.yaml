@@ -41,4 +41,4 @@ env:
 lifecycle:
     postCreate:
         - name: Install pi extensions
-          command: sbx exec "$SBX_SANDBOX_NAME" pi install npm:pi-web-search
+          command: sbx exec "$SBX_SANDBOX_NAME" pi install npm:pi-web-access
