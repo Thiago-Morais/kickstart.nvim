@@ -27,9 +27,9 @@ From the repo root, `nvim --headless +qa` must print no errors.
 
 ## Docs
 
-- [docs/PLUGINS.md](docs/PLUGINS.md): adding, moving or configuring plugins, and where files go
-- [docs/LUA.md](docs/LUA.md): writing and checking Lua
-- [docs/GIT.md](docs/GIT.md): committing, branching, pushing
-- [docs/MARKDOWN.md](docs/MARKDOWN.md): writing Markdown
-- [docs/SANDBOX.md](docs/SANDBOX.md): working inside Docker Sandboxes (`$SANDBOX_NAME` is set)
-- [docs/PI.md](docs/PI.md): the Pi harness
+- [docs/SANDBOX.md](docs/SANDBOX.md): if working inside Docker Sandboxes, read this document (`$SANDBOX_NAME` is set)
+- [docs/PI.md](docs/PI.md): if working within Pi, read this document (`$PI_*` are set)
+- [docs/GIT.md](docs/GIT.md): before working with git
+- [docs/LUA.md](docs/LUA.md): before working with Lua
+- [docs/PLUGINS.md](docs/PLUGINS.md): before working with Neovim plugins
+- [docs/MARKDOWN.md](docs/MARKDOWN.md): before working with Markdown
