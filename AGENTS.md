@@ -9,6 +9,10 @@ Stop and ask in chat before:
 - deleting files.
 - running `:lua vim.pack.update()` or `vim.pack.del`, which change the installed plugins and the lockfile.
 
+## Startup
+
+On the user's first message, read [docs/STARTUP.md](docs/STARTUP.md)
+
 ## Every task
 
 - Discuss proposed changes before editing, unless asked to make them.
