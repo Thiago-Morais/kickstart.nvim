@@ -14,7 +14,7 @@ require 'keymaps'
 require 'commands'
 -- Build hooks must be registered before any `vim.pack.add` call,
 -- otherwise they won't run when a plugin is first installed.
-require 'pack-build-hooks'
+require('pack-build-hooks').setup()
 require 'pack-plugins'
 require('custom.matugen_config').setup()
 require 'custom-extensions'

@@ -2,6 +2,12 @@
 
 local M = {}
 
+function M.build(plugin_path)
+  if vim.fn.executable 'make' == 1 then
+    require('build-helper').try_build_with('telescope-fzf-native.nvim', { 'make' }, plugin_path)
+  end
+end
+
 function M.setup()
   ---@type (string | vim.pack.Spec)[]
   local telescope_plugins = {
@@ -9,7 +15,7 @@ function M.setup()
     'https://github.com/nvim-telescope/telescope.nvim',
     'https://github.com/nvim-telescope/telescope-ui-select.nvim',
   }
-  -- telescope-fzf-native is built with `make` (see `pack-build-hooks.lua`)
+  -- telescope-fzf-native is built with `make` (see `M.build`)
   if vim.fn.executable 'make' == 1 then
     table.insert(telescope_plugins, 'https://github.com/nvim-telescope/telescope-fzf-native.nvim')
   end

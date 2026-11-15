@@ -5,6 +5,13 @@
 
 local M = {}
 
+function M.build(_, is_active)
+  if not is_active then
+    vim.cmd.packadd 'nvim-treesitter'
+  end
+  vim.cmd 'TSUpdate'
+end
+
 function M.setup()
   vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
 

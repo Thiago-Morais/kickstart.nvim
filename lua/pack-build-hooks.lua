@@ -14,67 +14,41 @@
 --    :lua vim.pack.del { 'plugin-name' }
 --
 -- `vim.pack` has no `build` field, so build steps run from the
--- `PackChanged` event after a plugin is installed or updated.
+-- `PackChanged` event after a plugin is installed or updated, by calling
+-- the `build` function of the plugin's module.
 -- See `:help vim.pack-events`
 
-local function run_build(plugin_name, command, cwd)
-  local result = vim.system(command, { cwd = cwd }):wait()
-  if result.code ~= 0 then
-    local stderr = result.stderr or ''
-    local stdout = result.stdout or ''
-    local output = stderr ~= '' and stderr or stdout
-    if output == '' then
-      output = 'No output from build command.'
-    end
-    vim.notify(('Build failed for %s:\n%s'):format(plugin_name, output), vim.log.levels.ERROR)
-  end
-end
+local M = {}
 
----@type table<string, fun(plugin_path: string, is_active: boolean)>
-local build_steps_by_plugin = {
-  ['telescope-fzf-native.nvim'] = function(plugin_path)
-    if vim.fn.executable 'make' == 1 then
-      run_build('telescope-fzf-native.nvim', { 'make' }, plugin_path)
-    end
-  end,
-
-  -- Build Step is needed for regex support in snippets.
-  ['LuaSnip'] = function(plugin_path)
-    if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
-      run_build('LuaSnip', { 'make', 'install_jsregexp' }, plugin_path)
-    end
-  end,
-
-  ['nvim-treesitter'] = function(_, is_active)
-    if not is_active then
-      vim.cmd.packadd 'nvim-treesitter'
-    end
-    vim.cmd 'TSUpdate'
-  end,
-
-  ['markdown-preview.nvim'] = function(plugin_path)
-    run_build('markdown-preview.nvim', { 'yarn', 'install' }, vim.fs.joinpath(plugin_path, 'app'))
-  end,
-
-  ['live-server.nvim'] = function(plugin_path)
-    run_build('live-server.nvim', { 'npm', 'install', '-g', 'live-server' }, plugin_path)
-  end,
+-- The hook requires these modules while plugins are still installing,
+-- so requiring them must not run `vim.pack.add` or any setup.
+---@type table<string, string>
+local build_modules_by_plugin = {
+  ['telescope-fzf-native.nvim'] = 'custom.plugins.telescope',
+  ['LuaSnip'] = 'custom.plugins.typing.blink',
+  ['nvim-treesitter'] = 'custom.plugins.decoration.nvim-treesitter',
+  ['markdown-preview.nvim'] = 'custom.plugins.running.markdown-preview',
+  ['live-server.nvim'] = 'custom.plugins.running.live-server',
 }
 
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = vim.api.nvim_create_augroup('pack-build-hooks', { clear = true }),
-  callback = function(event)
-    local kind = event.data.kind
-    if kind ~= 'install' and kind ~= 'update' then
-      return
-    end
+function M.setup()
+  vim.api.nvim_create_autocmd('PackChanged', {
+    group = vim.api.nvim_create_augroup('pack-build-hooks', { clear = true }),
+    callback = function(event)
+      local kind = event.data.kind
+      if kind ~= 'install' and kind ~= 'update' then
+        return
+      end
 
-    local build_step = build_steps_by_plugin[event.data.spec.name]
-    if build_step then
-      build_step(event.data.path, event.data.active)
-    end
-  end,
-})
+      local build_module = build_modules_by_plugin[event.data.spec.name]
+      if build_module then
+        require(build_module).build(event.data.path, event.data.active)
+      end
+    end,
+  })
+end
+
+return M
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

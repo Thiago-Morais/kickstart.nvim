@@ -95,9 +95,15 @@ M.blink_config = {
   signature = { enabled = true },
 }
 
+-- Build Step is needed for regex support in snippets.
+function M.build(plugin_path)
+  if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then
+    require('build-helper').try_build_with('LuaSnip', { 'make', 'install_jsregexp' }, plugin_path)
+  end
+end
+
 function M.setup()
   -- [[ Snippet Engine ]]
-  -- LuaSnip's regex support is built in `pack-build-hooks.lua`
   vim.pack.add {
     { src = 'https://github.com/L3MON4D3/LuaSnip', version = vim.version.range '2.*' },
     -- `friendly-snippets` contains a variety of premade snippets.

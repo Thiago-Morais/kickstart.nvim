@@ -1,6 +1,10 @@
 local M = {}
 
--- `live-server` itself is installed with npm (see `pack-build-hooks.lua`)
+-- `live-server` itself is installed with npm
+function M.build(plugin_path)
+  require('build-helper').try_build_with('live-server.nvim', { 'npm', 'install', '-g', 'live-server' }, plugin_path)
+end
+
 function M.setup()
   vim.g.live_server = {
     port = 8080,
