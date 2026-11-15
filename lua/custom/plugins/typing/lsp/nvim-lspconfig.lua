@@ -310,7 +310,7 @@ function M.setup()
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
       'tree-sitter-cli',
-      'markdownlint',
+      'markdownlint-cli2',
       'biome',
       'prettierd',
       'fixjson',

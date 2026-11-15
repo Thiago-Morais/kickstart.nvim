@@ -29,7 +29,7 @@ M.conform_config = {
     -- javascript = { 'prettier', stop_after_first = true },
     jsonc = { 'biome', stop_after_first = true },
     json = { 'fixjson', 'biome' },
-    markdown = { 'markdownlint', 'prettierd', stop_after_first = true },
+    markdown = { 'markdownlint-cli2', 'prettierd', stop_after_first = true },
     bash = { 'beautysh' },
     sh = { 'beautysh' },
     hyprland = { 'hyprls' },
@@ -77,7 +77,7 @@ M.conform_config = {
         end
       end,
     },
-    markdownlint = {},
+    ['markdownlint-cli2'] = {},
   },
 }
 M.conform_config.formatters.prettierd = M.conform_config.formatters.prettier
