@@ -1,8 +1,14 @@
-vim.pack.add { 'https://github.com/andymass/vim-matchup' }
+local M = {}
 
----@type matchup.Config
-require('match-up').setup {
-  treesitter = {
-    stopline = 500,
-  },
-}
+function M.setup()
+  vim.pack.add { 'https://github.com/andymass/vim-matchup' }
+
+  ---@type matchup.Config
+  require('match-up').setup {
+    treesitter = {
+      stopline = 500,
+    },
+  }
+end
+
+return M

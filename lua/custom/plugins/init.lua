@@ -3,11 +3,19 @@
 --
 -- See the kickstart.nvim README for more information
 --
--- `mini`, `decoration`, `telescope` and `typing` are required earlier from
+-- `mini`, `decoration`, `telescope` and `typing` are set up earlier from
 -- `pack-plugins.lua` because other plugins depend on them.
-require 'custom.plugins.running'
-require 'custom.plugins.neovim-extension'
-require 'custom.plugins.obsidian'
-require 'custom.plugins.obsidian-bridge'
-require 'custom.plugins.persisted'
-require 'custom.plugins.typescript-tools'
+
+local M = {}
+
+function M.setup()
+  require('custom.plugins.running').setup()
+  require('custom.plugins.neovim-extension').setup()
+  require('custom.plugins.obsidian').setup()
+  require('custom.plugins.obsidian-bridge').setup()
+  require('custom.plugins.persisted').setup()
+  -- Disabled to avoid duplicate LSP actions with ts_ls
+  -- require('custom.plugins.typescript-tools').setup()
+end
+
+return M

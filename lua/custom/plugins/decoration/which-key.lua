@@ -1,55 +1,62 @@
 -- Useful plugin to show you pending keybinds.
-vim.pack.add { 'https://github.com/folke/which-key.nvim' }
 
-require('which-key').setup {
-  delay = 0,
-  icons = {
-    -- set icon mappings to true if you have a Nerd Font
-    mappings = vim.g.have_nerd_font,
-    keys = vim.g.have_nerd_font and {} or {
-      Up = '<Up> ',
-      Down = '<Down> ',
-      Left = '<Left> ',
-      Right = '<Right> ',
-      C = '<C-…> ',
-      M = '<M-…> ',
-      D = '<D-…> ',
-      S = '<S-…> ',
-      CR = '<CR> ',
-      Esc = '<Esc> ',
-      ScrollWheelDown = '<ScrollWheelDown> ',
-      ScrollWheelUp = '<ScrollWheelUp> ',
-      NL = '<NL> ',
-      BS = '<BS> ',
-      Space = '<Space> ',
-      Tab = '<Tab> ',
-      F1 = '<F1>',
-      F2 = '<F2>',
-      F3 = '<F3>',
-      F4 = '<F4>',
-      F5 = '<F5>',
-      F6 = '<F6>',
-      F7 = '<F7>',
-      F8 = '<F8>',
-      F9 = '<F9>',
-      F10 = '<F10>',
-      F11 = '<F11>',
-      F12 = '<F12>',
+local M = {}
+
+function M.setup()
+  vim.pack.add { 'https://github.com/folke/which-key.nvim' }
+
+  require('which-key').setup {
+    delay = 0,
+    icons = {
+      -- set icon mappings to true if you have a Nerd Font
+      mappings = vim.g.have_nerd_font,
+      keys = vim.g.have_nerd_font and {} or {
+        Up = '<Up> ',
+        Down = '<Down> ',
+        Left = '<Left> ',
+        Right = '<Right> ',
+        C = '<C-…> ',
+        M = '<M-…> ',
+        D = '<D-…> ',
+        S = '<S-…> ',
+        CR = '<CR> ',
+        Esc = '<Esc> ',
+        ScrollWheelDown = '<ScrollWheelDown> ',
+        ScrollWheelUp = '<ScrollWheelUp> ',
+        NL = '<NL> ',
+        BS = '<BS> ',
+        Space = '<Space> ',
+        Tab = '<Tab> ',
+        F1 = '<F1>',
+        F2 = '<F2>',
+        F3 = '<F3>',
+        F4 = '<F4>',
+        F5 = '<F5>',
+        F6 = '<F6>',
+        F7 = '<F7>',
+        F8 = '<F8>',
+        F9 = '<F9>',
+        F10 = '<F10>',
+        F11 = '<F11>',
+        F12 = '<F12>',
+      },
     },
-  },
 
-  -- Document existing key chains
-  spec = {
-    { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-    { '<leader>t', group = '[T]est or [T]oggle' },
-    { '<leader>g', group = '[G]it' },
-    { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-    { '<leader>d', group = '[D]ebugging' },
-    { '<leader>l', group = '[L]ive Server' },
-    { '<leader>m', group = '[M]ulticursor' },
-    { '<leader>p', group = '[P]ersisted sessions' },
-    { '<leader>c', group = '[C]opy' },
-    { '<leader>cf', group = '[C]opy [F]ile' },
-    { 'gr', group = 'LSP Actions', mode = { 'n' } },
-  },
-}
+    -- Document existing key chains
+    spec = {
+      { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+      { '<leader>t', group = '[T]est or [T]oggle' },
+      { '<leader>g', group = '[G]it' },
+      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      { '<leader>d', group = '[D]ebugging' },
+      { '<leader>l', group = '[L]ive Server' },
+      { '<leader>m', group = '[M]ulticursor' },
+      { '<leader>p', group = '[P]ersisted sessions' },
+      { '<leader>c', group = '[C]opy' },
+      { '<leader>cf', group = '[C]opy [F]ile' },
+      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+    },
+  }
+end
+
+return M

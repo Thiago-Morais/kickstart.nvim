@@ -1,9 +1,10 @@
--- Disabled
-do
-  return
+local M = {}
+
+function M.setup()
+  vim.pack.add { 'https://github.com/junyixu/fcitx.nvim' }
+  require('fcitx').setup {
+    -- enable_cmdline = true, -- also toggle when entering / or ?
+  }
 end
 
-vim.pack.add { 'https://github.com/junyixu/fcitx.nvim' }
-require('fcitx').setup {
-  -- enable_cmdline = true, -- also toggle when entering / or ?
-}
+return M

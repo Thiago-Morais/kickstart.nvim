@@ -1,22 +1,8 @@
 -- Autoformat
-vim.pack.add {
-  'https://github.com/stevearc/conform.nvim',
-  'https://github.com/zapling/mason-conform.nvim',
-}
 
--- Format document with a custom formatter
-vim.api.nvim_create_user_command('FormatWith', function(opts)
-  local list = vim.split(opts.args, ',', { trimempty = true })
-  require('conform').format { formatters = list }
-end, {
-  nargs = 1,
-  desc = 'Format with a comma-separated list of formatters',
-  complete = function()
-    return require('mason-registry').get_installed_package_names()
-  end,
-})
+local M = {}
 
-local conform_config = {
+M.conform_config = {
   log_level = vim.log.levels.DEBUG,
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -94,9 +80,35 @@ local conform_config = {
     markdownlint = {},
   },
 }
-conform_config.formatters.prettierd = conform_config.formatters.prettier
-require('conform').setup(conform_config)
+M.conform_config.formatters.prettierd = M.conform_config.formatters.prettier
 
-vim.keymap.set('', '<leader>f', function()
-  require('conform').format { async = true, lsp_format = 'fallback' }
-end, { desc = '[F]ormat buffer' })
+function M.setup()
+  vim.pack.add {
+    'https://github.com/stevearc/conform.nvim',
+    'https://github.com/zapling/mason-conform.nvim',
+  }
+
+  -- Format document with a custom formatter
+  vim.api.nvim_create_user_command('FormatWith', function(opts)
+    local list = vim.split(opts.args, ',', { trimempty = true })
+    require('conform').format { formatters = list }
+  end, {
+    nargs = 1,
+    desc = 'Format with a comma-separated list of formatters',
+    complete = function()
+      return require('mason-registry').get_installed_package_names()
+    end,
+  })
+
+  require('conform').setup(M.conform_config)
+
+  M.add_keymaps()
+end
+
+function M.add_keymaps()
+  vim.keymap.set('', '<leader>f', function()
+    require('conform').format { async = true, lsp_format = 'fallback' }
+  end, { desc = '[F]ormat buffer' })
+end
+
+return M

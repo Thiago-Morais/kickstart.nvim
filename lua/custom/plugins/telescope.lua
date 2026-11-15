@@ -1,56 +1,65 @@
 -- Fuzzy Finder (files, lsp, etc)
----@type (string | vim.pack.Spec)[]
-local telescope_plugins = {
-  'https://github.com/nvim-lua/plenary.nvim',
-  'https://github.com/nvim-telescope/telescope.nvim',
-  'https://github.com/nvim-telescope/telescope-ui-select.nvim',
-}
--- telescope-fzf-native is built with `make` (see `pack-build-hooks.lua`)
-if vim.fn.executable 'make' == 1 then
-  table.insert(telescope_plugins, 'https://github.com/nvim-telescope/telescope-fzf-native.nvim')
-end
-vim.pack.add(telescope_plugins)
 
-do
-  -- Two important keymaps to use while in Telescope are:
-  --  - Insert mode: <c-/>
-  --  - Normal mode: ?
-  --
-  -- This opens a window that shows you all of the keymaps for the current
-  -- Telescope picker. This is really useful to discover what Telescope can
-  -- do as well as how to actually do it!
+local M = {}
 
-  -- [[ Configure Telescope ]]
-  -- See `:help telescope` and `:help telescope.setup()`
-  require('telescope').setup {
-    -- You can put your default mappings / updates / etc. in here
-    --  All the info you're looking for is in `:help telescope.setup()`
-    --
-    defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      file_ignore_patterns = {
-        '.git/',
-      },
-    },
-    pickers = {
-      find_files = { hidden = true },
-    },
-    extensions = {
-      ['ui-select'] = {
-        require('telescope.themes').get_dropdown(),
-      },
-      ['persisted'] = {
-        layout_config = { width = 0.55, height = 0.55 },
-      },
-    },
+function M.setup()
+  ---@type (string | vim.pack.Spec)[]
+  local telescope_plugins = {
+    'https://github.com/nvim-lua/plenary.nvim',
+    'https://github.com/nvim-telescope/telescope.nvim',
+    'https://github.com/nvim-telescope/telescope-ui-select.nvim',
   }
+  -- telescope-fzf-native is built with `make` (see `pack-build-hooks.lua`)
+  if vim.fn.executable 'make' == 1 then
+    table.insert(telescope_plugins, 'https://github.com/nvim-telescope/telescope-fzf-native.nvim')
+  end
+  vim.pack.add(telescope_plugins)
 
-  -- Enable Telescope extensions if they are installed
-  pcall(require('telescope').load_extension, 'fzf')
-  pcall(require('telescope').load_extension, 'ui-select')
+  do
+    -- Two important keymaps to use while in Telescope are:
+    --  - Insert mode: <c-/>
+    --  - Normal mode: ?
+    --
+    -- This opens a window that shows you all of the keymaps for the current
+    -- Telescope picker. This is really useful to discover what Telescope can
+    -- do as well as how to actually do it!
 
+    -- [[ Configure Telescope ]]
+    -- See `:help telescope` and `:help telescope.setup()`
+    require('telescope').setup {
+      -- You can put your default mappings / updates / etc. in here
+      --  All the info you're looking for is in `:help telescope.setup()`
+      --
+      defaults = {
+        --   mappings = {
+        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        --   },
+        file_ignore_patterns = {
+          '.git/',
+        },
+      },
+      pickers = {
+        find_files = { hidden = true },
+      },
+      extensions = {
+        ['ui-select'] = {
+          require('telescope.themes').get_dropdown(),
+        },
+        ['persisted'] = {
+          layout_config = { width = 0.55, height = 0.55 },
+        },
+      },
+    }
+
+    -- Enable Telescope extensions if they are installed
+    pcall(require('telescope').load_extension, 'fzf')
+    pcall(require('telescope').load_extension, 'ui-select')
+  end
+
+  M.add_keymaps()
+end
+
+function M.add_keymaps()
   -- See `:help telescope.builtin`
   local builtin = require 'telescope.builtin'
   vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
@@ -96,3 +105,5 @@ do
     builtin.find_files { cwd = vim.fn.stdpath 'config', follow = true }
   end, { desc = '[S]earch [N]eovim files' })
 end
+
+return M

@@ -1,56 +1,8 @@
--- [[ Snippet Engine ]]
--- LuaSnip's regex support is built in `pack-build-hooks.lua`
-vim.pack.add {
-  { src = 'https://github.com/L3MON4D3/LuaSnip', version = vim.version.range '2.*' },
-  -- `friendly-snippets` contains a variety of premade snippets.
-  --    See the README about individual language/framework/plugin snippets:
-  --    https://github.com/rafamadriz/friendly-snippets
-  'https://github.com/rafamadriz/friendly-snippets',
-}
-require('luasnip').setup {}
-require('luasnip.loaders.from_vscode').lazy_load()
-require('luasnip.loaders.from_vscode').lazy_load { paths = { './snippets' } }
-
-vim.keymap.set({ 'n', 'i', 's' }, '<Tab>', function()
-  local luasnip = require 'luasnip'
-  if luasnip.locally_jumpable(1) then
-    luasnip.jump(1)
-  else
-    require('custom.keymap_extended').feedkey '<Tab>'
-  end
-end)
-vim.keymap.set({ 'n', 'i', 's' }, '<S-Tab>', function()
-  local luasnip = require 'luasnip'
-  if luasnip.locally_jumpable(-1) then
-    luasnip.jump(-1)
-  else
-    require('custom.keymap_extended').feedkey '<S-Tab>'
-  end
-end)
-vim.keymap.set({ 'n', 'i', 's' }, '<C-E>', function()
-  local luasnip = require 'luasnip'
-  if luasnip.choice_active() then
-    luasnip.change_choice(1)
-  end
-end)
-
--- [[ Autocomplete Engine ]]
-vim.pack.add {
-  -- use v2.* of blink.compat for blink.cmp v1.*
-  { src = 'https://github.com/saghen/blink.compat', version = vim.version.range '2.*' },
-  { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.*' },
-  -- Extra completion sources
-  'https://github.com/MahanRahmati/blink-nerdfont.nvim',
-  'https://github.com/Kaiser-Yang/blink-cmp-git',
-  'https://github.com/disrupted/blink-cmp-conventional-commits',
-  'https://github.com/moyiz/blink-emoji.nvim',
-  { src = 'https://github.com/mikavilpas/blink-ripgrep.nvim', version = vim.version.range '*' },
-}
-require('blink.compat').setup {}
+local M = {}
 
 --- @module 'blink.cmp'
 --- @type blink.cmp.Config
-local blink_config = {
+M.blink_config = {
   keymap = {
     preset = 'enter',
     ['<S-Tab>'] = { 'select_prev', 'fallback' },
@@ -142,4 +94,63 @@ local blink_config = {
   -- Shows a signature help window while you type arguments for a function
   signature = { enabled = true },
 }
-require('blink.cmp').setup(blink_config)
+
+function M.setup()
+  -- [[ Snippet Engine ]]
+  -- LuaSnip's regex support is built in `pack-build-hooks.lua`
+  vim.pack.add {
+    { src = 'https://github.com/L3MON4D3/LuaSnip', version = vim.version.range '2.*' },
+    -- `friendly-snippets` contains a variety of premade snippets.
+    --    See the README about individual language/framework/plugin snippets:
+    --    https://github.com/rafamadriz/friendly-snippets
+    'https://github.com/rafamadriz/friendly-snippets',
+  }
+  require('luasnip').setup {}
+  require('luasnip.loaders.from_vscode').lazy_load()
+  require('luasnip.loaders.from_vscode').lazy_load { paths = { './snippets' } }
+
+  -- [[ Autocomplete Engine ]]
+  vim.pack.add {
+    -- use v2.* of blink.compat for blink.cmp v1.*
+    { src = 'https://github.com/saghen/blink.compat', version = vim.version.range '2.*' },
+    { src = 'https://github.com/saghen/blink.cmp', version = vim.version.range '1.*' },
+    -- Extra completion sources
+    'https://github.com/MahanRahmati/blink-nerdfont.nvim',
+    'https://github.com/Kaiser-Yang/blink-cmp-git',
+    'https://github.com/disrupted/blink-cmp-conventional-commits',
+    'https://github.com/moyiz/blink-emoji.nvim',
+    { src = 'https://github.com/mikavilpas/blink-ripgrep.nvim', version = vim.version.range '*' },
+  }
+  require('blink.compat').setup {}
+
+  require('blink.cmp').setup(M.blink_config)
+
+  M.add_keymaps()
+end
+
+function M.add_keymaps()
+  vim.keymap.set({ 'n', 'i', 's' }, '<Tab>', function()
+    local luasnip = require 'luasnip'
+    if luasnip.locally_jumpable(1) then
+      luasnip.jump(1)
+    else
+      require('custom.keymap_extended').feedkey '<Tab>'
+    end
+  end)
+  vim.keymap.set({ 'n', 'i', 's' }, '<S-Tab>', function()
+    local luasnip = require 'luasnip'
+    if luasnip.locally_jumpable(-1) then
+      luasnip.jump(-1)
+    else
+      require('custom.keymap_extended').feedkey '<S-Tab>'
+    end
+  end)
+  vim.keymap.set({ 'n', 'i', 's' }, '<C-E>', function()
+    local luasnip = require 'luasnip'
+    if luasnip.choice_active() then
+      luasnip.change_choice(1)
+    end
+  end)
+end
+
+return M

@@ -1,7 +1,13 @@
--- vim.pack.add { 'https://github.com/numToStr/Comment.nvim' }
--- require('Comment').setup {
---   toggler = {
---     line = 'gcl',
---     block = 'gbl',
---   },
--- }
+local M = {}
+
+function M.setup()
+  vim.pack.add { 'https://github.com/numToStr/Comment.nvim' }
+  require('Comment').setup {
+    toggler = {
+      line = 'gcl',
+      block = 'gbl',
+    },
+  }
+end
+
+return M

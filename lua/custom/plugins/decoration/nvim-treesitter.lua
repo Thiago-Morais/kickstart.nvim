@@ -2,31 +2,70 @@
 --  Used to highlight, edit, and navigate code
 --
 --  See `:help nvim-treesitter-intro`
-vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
 
--- Ensure basic parsers are installed
-local parsers = {
-  'bash',
-  'c',
-  'diff',
-  'html',
-  'lua',
-  'luadoc',
-  'markdown',
-  'markdown_inline',
-  'query',
-  'vim',
-  'vimdoc',
-  'json',
-  'javascript',
-  'php',
-  'blade',
-}
-require('nvim-treesitter').install(parsers)
+local M = {}
+
+function M.setup()
+  vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
+
+  -- Ensure basic parsers are installed
+  local parsers = {
+    'bash',
+    'c',
+    'diff',
+    'html',
+    'lua',
+    'luadoc',
+    'markdown',
+    'markdown_inline',
+    'query',
+    'vim',
+    'vimdoc',
+    'json',
+    'javascript',
+    'php',
+    'blade',
+  }
+  require('nvim-treesitter').install(parsers)
+
+  local available_parsers = require('nvim-treesitter').get_available()
+  vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('treesitter-attach', { clear = true }),
+    callback = function(args)
+      local buf, filetype = args.buf, args.match
+
+      local language = vim.treesitter.language.get_lang(filetype)
+      if not language then
+        return
+      end
+
+      local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
+
+      if vim.tbl_contains(installed_parsers, language) then
+        -- Enable the parser if it is already installed
+        M.treesitter_try_attach(buf, language)
+      elseif vim.tbl_contains(available_parsers, language) then
+        -- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
+        require('nvim-treesitter').install(language):await(function()
+          M.treesitter_try_attach(buf, language)
+        end)
+      else
+        -- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
+        M.treesitter_try_attach(buf, language)
+      end
+    end,
+  })
+
+  -- There are additional nvim-treesitter modules that you can use to interact
+  -- with nvim-treesitter. You should go explore a few and see what interests you:
+  --
+  --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+  --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+end
 
 ---@param buf integer
 ---@param language string
-local function treesitter_try_attach(buf, language)
+function M.treesitter_try_attach(buf, language)
   -- Check if the buffer is valid (might not be after install completes)
   if not vim.api.nvim_buf_is_valid(buf) then
     return
@@ -54,36 +93,4 @@ local function treesitter_try_attach(buf, language)
   end
 end
 
-local available_parsers = require('nvim-treesitter').get_available()
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('treesitter-attach', { clear = true }),
-  callback = function(args)
-    local buf, filetype = args.buf, args.match
-
-    local language = vim.treesitter.language.get_lang(filetype)
-    if not language then
-      return
-    end
-
-    local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
-
-    if vim.tbl_contains(installed_parsers, language) then
-      -- Enable the parser if it is already installed
-      treesitter_try_attach(buf, language)
-    elseif vim.tbl_contains(available_parsers, language) then
-      -- If a parser is available in `nvim-treesitter`, auto-install it and enable it after the installation is done
-      require('nvim-treesitter').install(language):await(function()
-        treesitter_try_attach(buf, language)
-      end)
-    else
-      -- Try to enable treesitter features in case the parser exists but is not available from `nvim-treesitter`
-      treesitter_try_attach(buf, language)
-    end
-  end,
-})
-
--- There are additional nvim-treesitter modules that you can use to interact
--- with nvim-treesitter. You should go explore a few and see what interests you:
---
---    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
---    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+return M
