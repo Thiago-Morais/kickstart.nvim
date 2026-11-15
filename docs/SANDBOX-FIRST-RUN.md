@@ -1,14 +1,7 @@
-# Sandbox first run
-
-On every sandbox start, the `nvim-tools` kit runs a background step that starts Neovim headless with this config and runs `:MasonToolsInstallSync`. On a fresh sandbox, that step:
-
-1. installs every plugin in the `vim.pack` lockfile from GitHub and runs their build steps;
-2. installs the Mason tools (LSP servers, linters, formatters, StyLua, the tree-sitter CLI).
-
-Until it finishes, plugins or StyLua may be missing and the startup check may fail.
+Until the background kits finishes, plugins or StyLua may be missing and the startup check may fail.
 
 - Check whether it's still running: `pgrep -af MasonToolsInstallSync`.
-- If it isn't running and Mason's data dir (`~/.local/share/nvim/mason`) doesn't exist, the step never ran, probably because the kit that `sbxenv.yaml` loads is outdated. Tell the user.
+- If it isn't running and Mason's data dir doesn't exist, the step never ran. Tell the user.
 - A download blocked by the sandbox firewall gets HTTP 403, and the response body says what to ask the user. Pass that on; don't work around the firewall.
 
 ## Known failures
