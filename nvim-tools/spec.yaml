@@ -19,6 +19,8 @@ permissions:
             - registry.npmjs.org
             - proxy.golang.org
             - sum.golang.org
+            - skills.sh
+            - www.skills.sh
 
 environment:
     variables:
