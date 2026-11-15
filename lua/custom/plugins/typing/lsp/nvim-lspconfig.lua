@@ -312,6 +312,10 @@ function M.setup()
       'html',
       'cssls',
       'tree-sitter-cli',
+      'markdownlint',
+      'biome',
+      'prettierd',
+      'fixjson',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
