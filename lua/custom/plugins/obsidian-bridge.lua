@@ -1,6 +1,11 @@
 local M = {}
 
 function M.setup()
+  -- Without the Obsidian app there's nothing to use this for.
+  if vim.fn.executable 'obsidian' == 0 then
+    return
+  end
+
   vim.pack.add {
     'https://github.com/nvim-lua/plenary.nvim',
     'https://github.com/oflisback/obsidian-bridge.nvim',

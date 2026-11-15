@@ -4,6 +4,11 @@
 local M = {}
 
 function M.setup()
+  -- Without the Obsidian app there's nothing to use this for.
+  if vim.fn.executable 'obsidian' == 0 then
+    return
+  end
+
   vim.pack.add { { src = 'https://github.com/epwalsh/obsidian.nvim', version = vim.version.range '*' } }
 
   -- Set up on the first markdown buffer only: setup fails when the vault folder doesn't exist.
