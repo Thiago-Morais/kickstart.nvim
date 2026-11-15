@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "skills": {
+    "architecture-decision-records": {
+      "source": "affaan-m/ECC",
+      "sourceType": "github",
+      "skillPath": "skills/architecture-decision-records/SKILL.md",
+      "computedHash": "8efc159025ce583f1947c1f2fe4d46c42644c787a70abc54f7fd18100b47b271"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "7bc223e2aafbdbf6e50ea243ba6ef67fe432bb069ab439fea0390795dac0bf7f"
+    }
+  }
+}
