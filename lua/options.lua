@@ -32,6 +32,13 @@ vim.o.signcolumn = 'yes'
 -- Text area
 vim.o.breakindent = true
 vim.o.cursorline = true
+--  Keep 'wrap' on diff mode
+vim.opt.diffopt:append 'followwrap'
+-- `nvim -d` (`git difftool -t nvimdiff`) turns diff on in the first window before this file runs, so 'followwrap'
+-- comes too late for it
+if vim.wo.diff then
+  vim.wo.wrap = vim.go.wrap
+end
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.o.scrolloff = 10
 -- Indentation
