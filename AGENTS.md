@@ -40,3 +40,4 @@ From the repo root, `nvim --headless +qa` must print no errors.
 - [docs/LUA.md](docs/LUA.md): before work with Lua
 - [docs/PLUGINS.md](docs/PLUGINS.md): before working with Neovim plugins
 - [docs/MARKDOWN.md](docs/MARKDOWN.md): before working with Markdown
+- [docs/ADR.md](docs/ADR.md): before recording or editing an ADR

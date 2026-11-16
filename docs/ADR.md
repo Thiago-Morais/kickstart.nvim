@@ -1,0 +1,1 @@
+- Once an ADR is accepted, don't edit it. To change the decision, write a new ADR and set the old one's status to `superseded by ADR-NNNN`. That status line is the only edit allowed to an accepted ADR.
