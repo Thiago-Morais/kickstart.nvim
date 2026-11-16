@@ -31,13 +31,15 @@ additionalWorkspaces:
     - path: ${{ env.args.gitdir }}/worktrees/${{ env.args.worktree }}
     - path: ../${{ env.args.worktree }}/.git
       readOnly: true
+    # Pi's config dir, kept in the agent worktree so it survives a recreate
+    - path: ../${{ env.args.worktree }}/.pi-agent
+      target: /home/agent/.pi/agent
 
 env:
     GIT_AUTHOR_NAME: Pi Agent
     GIT_AUTHOR_EMAIL: pi-agent@localhost
     GIT_COMMITTER_NAME: Pi Agent
     GIT_COMMITTER_EMAIL: pi-agent@localhost
-    PI_CODING_AGENT_DIR: ${{ env.fileDir }}/../${{ env.args.worktree }}/.pi-agent
 
 lifecycle:
     postCreate:
