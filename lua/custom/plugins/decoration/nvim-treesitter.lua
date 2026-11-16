@@ -5,6 +5,25 @@
 
 local M = {}
 
+-- Also installed by the sandbox kit (nvim-tools/spec.yaml), which waits for the install to finish
+M.parsers = {
+  'bash',
+  'c',
+  'diff',
+  'html',
+  'lua',
+  'luadoc',
+  'markdown',
+  'markdown_inline',
+  'query',
+  'vim',
+  'vimdoc',
+  'json',
+  'javascript',
+  'php',
+  'blade',
+}
+
 function M.build(_, is_active)
   if not is_active then
     vim.cmd.packadd 'nvim-treesitter'
@@ -15,25 +34,7 @@ end
 function M.setup()
   vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
 
-  -- Ensure basic parsers are installed
-  local parsers = {
-    'bash',
-    'c',
-    'diff',
-    'html',
-    'lua',
-    'luadoc',
-    'markdown',
-    'markdown_inline',
-    'query',
-    'vim',
-    'vimdoc',
-    'json',
-    'javascript',
-    'php',
-    'blade',
-  }
-  require('nvim-treesitter').install(parsers)
+  require('nvim-treesitter').install(M.parsers)
 
   local available_parsers = require('nvim-treesitter').get_available()
   vim.api.nvim_create_autocmd('FileType', {

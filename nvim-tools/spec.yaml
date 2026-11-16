@@ -47,10 +47,12 @@ setup:
               - sh
               - -c
               - mkdir -p ~/.config && ln -sfn "$WORKSPACE_DIR" ~/.config/nvim
-        - description: Install plugins and Mason tools for the workspace config
+        - description: Install plugins, Mason tools and treesitter parsers for the workspace config
           background: true
           command:
               - nvim
               - --headless
               - +MasonToolsInstallSync
+              # Parser installs are asynchronous, and building them needs the tree-sitter CLI that Mason just installed
+              - +lua require('nvim-treesitter').install(require('custom.plugins.decoration.nvim-treesitter').parsers):wait(600000)
               - +qa
