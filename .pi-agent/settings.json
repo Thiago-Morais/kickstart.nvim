@@ -1,3 +1,9 @@
 {
-  "packages": ["npm:pi-web-access"]
+  "packages": [
+    "npm:pi-web-access"
+  ],
+  "lastChangelogVersion": "1.5.2",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.48.0"
+  }
 }
