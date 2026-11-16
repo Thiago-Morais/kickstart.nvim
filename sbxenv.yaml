@@ -3,12 +3,12 @@
 schemaVersion: "1"
 name: nvim
 agent: pi
-workspace: ../nvim-agent
+workspace: ../${{ env.args.worktree }}
 
 kits:
     - docker.io/sbx/pi-kit:latest
     # We go up first so that a sibling worktree points to the main worktree
-    - ../nvim/nvim-tools
+    - ../${{ env.args.mainWorktree }}/nvim-tools
 
 args:
     gitdir:
@@ -17,6 +17,8 @@ args:
         default: ../../.git/modules/.config/nvim
     worktree:
         default: nvim-agent
+    mainWorktree:
+        default: nvim
 
 additionalWorkspaces:
     - path: ${{ env.args.gitdir }}
