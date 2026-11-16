@@ -2,7 +2,15 @@
 local M = {}
 
 function M.try_build_with(plugin_name, command, cwd)
-  local result = vim.system(command, { cwd = cwd }):wait()
+  -- `vim.system` throws instead of returning a result when the command isn't installed
+  local started, result = pcall(function()
+    return vim.system(command, { cwd = cwd }):wait()
+  end)
+  if not started then
+    vim.notify(('Build failed for %s:\n%s'):format(plugin_name, result), vim.log.levels.ERROR)
+    return
+  end
+
   if result.code ~= 0 then
     local stderr = result.stderr or ''
     local stdout = result.stdout or ''
