@@ -314,6 +314,9 @@ function M.setup()
       'biome',
       'prettierd',
       'fixjson',
+      -- DAP adapters for kickstart.plugins.debug
+      'delve',
+      'js-debug-adapter',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
