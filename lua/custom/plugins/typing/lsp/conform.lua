@@ -39,6 +39,7 @@ M.conform_config = {
     ruby = { 'rubyfmt' },
     go = { 'goimports', stop_after_first = true },
     sql = { 'sqruff', 'sqlfmt', 'dbt', 'pgformatter', 'sql-formatter', stop_after_first = true },
+    cs = { 'csharpier', stop_after_first = true },
     ['_'] = { 'prettierd', 'prettier', lsp_format = 'fallback', stop_after_first = true },
     -- ['_'] = { 'prettier', lsp_format = 'fallback', stop_after_first = true },
   },
